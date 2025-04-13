@@ -1,5 +1,3 @@
-import "./Lading.css";
-
 const Lading = (props) => {
   return (
     <div>

@@ -1,21 +1,25 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Lading from "./Pages/Landing/Landing.jsx";
+import Home from "./Pages/Home/Home.jsx";
+import Login from "./Pages/Login/Login.jsx";
+import Match from "./Pages/Match/Match.jsx";
 
 const appRouter = createBrowserRouter([
   { 
     path: "/",
-    element: <></>
+    element: <Lading/>
   },
   { 
     path: "/home",
-    element: <></>
+    element: <Home/>
   },
   { 
     path: "/login",
-    element: <></>
+    element: <Login/>
   },
   { 
     path: "/match",
-    element: <></>
+    element: <Match/>
   },
 ])
 
@@ -23,7 +27,7 @@ function App() {
 
   return (
     <>
-    <RouterProvider router={appRouter} />
+      <RouterProvider router={appRouter} />
     </>
   )
 }

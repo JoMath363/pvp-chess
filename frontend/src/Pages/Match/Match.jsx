@@ -1,5 +1,3 @@
-import "./Match.css";
-
 const Match = (props) => {
   return (
     <div>

@@ -1,0 +1,28 @@
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  height: 5rem;
+  padding: 0 1.5rem;
+
+  background: var(--surface);
+  color: var(--light-gray);
+}
+
+.topbar-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+
+  & img {
+    height: 3rem;
+    width: 3rem;
+  }
+
+  & span {
+    font-size: 1.5rem;
+    font-weight: 450;
+  }
+}

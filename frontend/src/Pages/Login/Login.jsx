@@ -1,5 +1,3 @@
-import "./Login.css";
-
 const Login = (props) => {
   return (
     <div>
