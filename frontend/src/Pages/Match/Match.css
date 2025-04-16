@@ -1,0 +1,16 @@
+.match {
+  display: flex;
+  height: calc(100vh - 5rem);
+}
+
+.match-main{
+  background: black;
+  flex: 80%;
+  height: 100%;
+}
+
+.match-aside {
+  background: var(--background);
+  height: 100%;
+  width: 400px;
+}
