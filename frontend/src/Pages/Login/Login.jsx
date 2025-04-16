@@ -24,7 +24,19 @@ const Login = (props) => {
           </div>
 
           <form className="login-form">
+            <label>
+              <span>Username:</span>
+              <input type="text" />
+            </label>
 
+            <label>
+              <span>Password:</span>
+              <input type="password" />
+            </label>
+
+            <a href="/login/recover">Forgot Password?</a>
+
+            <button>Login</button>
           </form>
 
           <p className="login-link">Don't have an account yet? <a href="/signup">Sign Up</a></p>
