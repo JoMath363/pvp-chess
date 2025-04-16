@@ -3,77 +3,99 @@ import "./Board.css";
 
 const board = [
   [
-    { color: "B", type: "R" },
-    { color: "B", type: "N" },
-    { color: "B", type: "B" },
-    { color: "B", type: "Q" },
-    { color: "B", type: "K" },
-    { color: "B", type: "B" },
-    { color: "B", type: "N" },
-    { color: "B", type: "R" }
+    { color: "B", type: "R", active: false },
+    { color: "B", type: "N", active: false },
+    { color: "B", type: "B", active: false },
+    { color: "B", type: "Q", active: false },
+    { color: "B", type: "K", active: false },
+    { color: "B", type: "B", active: false },
+    { color: "B", type: "N", active: false },
+    { color: "B", type: "R", active: false }
   ],
   [
-    { color: "B", type: "P" },
-    { color: "B", type: "P" },
-    { color: "B", type: "P" },
-    null,
-    { color: "B", type: "P" },
-    { color: "B", type: "P" },
-    { color: "B", type: "P" },
-    { color: "B", type: "P" }
+    { color: "B", type: "P", active: false },
+    { color: "B", type: "P", active: false },
+    { color: "B", type: "P", active: false },
+    { color: "B", type: "P", active: false },
+    { color: "B", type: "P", active: false },
+    { color: "B", type: "P", active: false },
+    { color: "B", type: "P", active: false },
+    { color: "B", type: "P", active: false }
   ],
   [
-    null,
-    null,
-    null,
-    { color: "B", type: "P" },
-    null,
-    null,
-    null,
-    null
+    { active: false },
+    { active: false },
+    { active: false },
+    { active: false },
+    { active: false },
+    { active: false },
+    { active: false },
+    { active: false }
   ],
   [
-    null, null, null,
-    null, null, null,
-    null, null
+    { active: false },
+    { active: false },
+    { active: false },
+    { active: false },
+    { active: false },
+    { active: false },
+    { active: false },
+    { active: false }
   ],
   [
-    null, null, null,
-    null, null, null,
-    null, null
+    { active: false },
+    { active: false },
+    { active: false },
+    { active: false },
+    { active: false },
+    { active: false },
+    { active: false },
+    { active: false }
   ],
   [
-    null, null, null,
-    null, null, null,
-    null, null
+    { active: false },
+    { active: false },
+    { active: false },
+    { active: false },
+    { active: false },
+    { active: false },
+    { active: false },
+    { active: false }
   ],
   [
-    { color: "W", type: "P" },
-    { color: "W", type: "P" },
-    { color: "W", type: "P" },
-    { color: "W", type: "P" },
-    { color: "W", type: "P" },
-    { color: "W", type: "P" },
-    { color: "W", type: "P" },
-    { color: "W", type: "P" }
+    { color: "W", type: "P", active: false },
+    { color: "W", type: "P", active: false },
+    { color: "W", type: "P", active: false },
+    { color: "W", type: "P", active: false },
+    { color: "W", type: "P", active: false },
+    { color: "W", type: "P", active: false },
+    { color: "W", type: "P", active: false },
+    { color: "W", type: "P", active: false }
   ],
   [
-    { color: "W", type: "R" },
-    { color: "W", type: "N" },
-    { color: "W", type: "B" },
-    { color: "W", type: "Q" },
-    { color: "W", type: "K" },
-    { color: "W", type: "B" },
-    { color: "W", type: "N" },
-    { color: "W", type: "R" }
+    { color: "W", type: "R", active: false },
+    { color: "W", type: "N", active: false },
+    { color: "W", type: "B", active: false },
+    { color: "W", type: "Q", active: false },
+    { color: "W", type: "K", active: false },
+    { color: "W", type: "B", active: false },
+    { color: "W", type: "N", active: false },
+    { color: "W", type: "R", active: false }
   ]
-]
+];
 
 const Board = (props) => {
+
   return (
     <div className="board">
-      {board.map((row, i) => 
-        row.map((piece, j) => <Piece {...piece} key={i + j}/>)
+      {board.map((row, i) =>
+        row.map((piece, j) => {
+          return <Piece
+            key={i + j}
+            piece={piece}
+            row={i} col={j}
+          />
+        })
       )}
     </div>
   )

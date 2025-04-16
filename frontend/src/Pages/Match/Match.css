@@ -4,9 +4,13 @@
 }
 
 .match-main{
-  background: black;
+  display: flex;
+  align-items: center;
+
   flex: 80%;
   height: 100%;
+
+  background: black;
 }
 
 .match-aside {
