@@ -5,6 +5,7 @@ import InfoPanel from "../../Components/InfoPanel/InfoPanel";
 import Chat from "../../Components/Chat/Chat";
 
 const Match = (props) => {
+
   return (
     <>
       <Topbar />

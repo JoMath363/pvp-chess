@@ -32,34 +32,48 @@ const blackPieces = {
   "P": black_pawn,
 }
 
-const getBackground = (row, col, active) => {
-  if (active) {
-    return "light-blue"
+const Piece = ({ piece, row, col, selectPiece, movePiece, selected }) => {
+  const { type, color, active } = piece;
+
+  const getBackground = () => {
+    if (active) {
+      return "var(--active)";
+    }
+
+    if (row % 2 == 0) {
+      return col % 2 == 0 ? "var(--biege)" : "var(--brown)";
+    } else {
+      return col % 2 == 0 ? "var(--brown)" : "var(--biege)";
+    }
   }
 
-  if (row % 2 == 0) {
-    return col % 2 == 0 ? "var(--biege)" : "var(--brown)";
-  } else {
-    return col % 2 == 0 ? "var(--brown)" : "var(--biege)";
-  }
-}
+  const getAction = () => {
+    if (!selected && type && color) {
+      return selectPiece(row, col);
+    }
 
-const Piece = ({ piece, row, col}) => {
-  const {type, color, active} = piece;
+    if (selected && active) {
+      return movePiece(row, col)
+    }
+  }
 
   if (!type && !color) {
     return (
-      <div className="piece" 
-      style={{ background: getBackground(row, col, active) }}/>
+      <div className="piece"
+        style={{ background: getBackground() }}
+        onClick={() => getAction()}
+      />
     )
-  } 
+  }
 
   const pieces = color == "W" ? whitePieces : blackPieces;
 
   return (
-    <div className="piece" 
-    style={{ background: getBackground(row, col, active) }}> 
-    <img src={pieces[type]}/>
+    <div className="piece"
+      style={{ background: getBackground() }}
+      onClick={() => getAction()}
+    >
+      <img src={pieces[type]} />
     </div>
   )
 };

@@ -1,7 +1,8 @@
+import { useState } from "react";
 import Piece from "../Piece/Piece";
 import "./Board.css";
 
-const board = [
+const template = [
   [
     { color: "B", type: "R", active: false },
     { color: "B", type: "N", active: false },
@@ -85,15 +86,46 @@ const board = [
 ];
 
 const Board = (props) => {
+  const [board, setBoard] = useState(template)
+  const [selected, setSelected] = useState(null)
+
+  const selectPiece = (row, col) => {
+    console.log("selected")
+
+    const newBoard = board;
+    let moves = [[5, 3], [4, 3]] // Receber Possiveis Movimentos
+
+    const pieceMoves = [...moves, [row, col]]
+
+    for (const [r, c] of pieceMoves) {
+        newBoard[r][c].active = true;
+    }
+
+    setBoard(newBoard);
+    setSelected([row, col]);
+  }
+
+  const movePiece = (row, col) => {
+    console.log("moved")
+
+    const piece = board[row][col];
+    
+    // Emitir movemento
+    
+    setSelected(null)
+  }
 
   return (
     <div className="board">
       {board.map((row, i) =>
         row.map((piece, j) => {
           return <Piece
-            key={i + j}
+            selectPiece={selectPiece}
+            movePiece={movePiece}
+            selected={selected}
             piece={piece}
             row={i} col={j}
+            key={i + j}
           />
         })
       )}
