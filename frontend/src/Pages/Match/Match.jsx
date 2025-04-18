@@ -3,6 +3,9 @@ import Topbar from "../../Components/Topbar/Topbar";
 import Board from "../../Components/Board/Board";
 import InfoPanel from "../../Components/InfoPanel/InfoPanel";
 import Chat from "../../Components/Chat/Chat";
+import io from "socket.io-client";
+
+const socket = io.connect("http://localhost:3000");
 
 const Match = (props) => {
   return (
