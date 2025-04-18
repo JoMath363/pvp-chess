@@ -9,8 +9,8 @@ export default () => {
   const game = new Game();
 
   game.visualize();
+  console.log(game.getPieceMoves(6, 3));
   game.movePiece(1, 3, 2, 3);
-  game.visualize();
 };
 
 /* 
