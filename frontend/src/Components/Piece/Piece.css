@@ -4,3 +4,15 @@
     width: 100%;
   }
 }
+
+.piece-brown {
+  background: var(--brown);
+}
+
+.piece-biege {
+  background: var(--biege);
+}
+
+.piece-active {
+  background: var(--active);
+}

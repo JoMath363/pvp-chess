@@ -1,16 +1,15 @@
-import ChessBoard from "./src/chess/ChessBoard.js";
-import Game from "./src/chess/Game.js";
+import MatchMannager from "./src/match/MatchMannager.js";
 
-const test = (message, func) => {
+/* const test = (message, func) => {
   console.log(message, func() ? "passed" : "failed");
-};
+}; */
 
 export default () => {
-  const game = new Game();
+  const game = new MatchMannager();
 
-  game.visualize();
-  console.log(game.getPieceMoves(6, 3));
-  game.movePiece(1, 3, 2, 3);
+  let test = game.getDefaultBoard();
+
+  console.log(test);
 };
 
 /* 

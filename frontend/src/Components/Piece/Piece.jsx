@@ -14,7 +14,7 @@ import black_rook from "../Assets/black_rook.png"
 import black_knight from "../Assets/black_knight.png"
 import black_pawn from "../Assets/black_pawn.png"
 
-const whitePieces = {
+const whiteIcons = {
   "K": white_king,
   "Q": white_queen,
   "B": white_bishop,
@@ -23,7 +23,7 @@ const whitePieces = {
   "P": white_pawn,
 }
 
-const blackPieces = {
+const blackIcons = {
   "K": black_king,
   "Q": black_queen,
   "B": black_bishop,
@@ -32,48 +32,35 @@ const blackPieces = {
   "P": black_pawn,
 }
 
-const Piece = ({ piece, row, col, selectPiece, movePiece, selected }) => {
-  const { type, color, active } = piece;
+const Piece = ({ piece, position }) => {
+  const [row, col] = position;
+  const { color, type, state } = piece;
 
-  const getBackground = () => {
-    if (active) {
-      return "var(--active)";
-    }
+  // Get Intercalated Color for Board Squares
+  const background =
+    state == "active" ? (
+      "piece-active"
+    ) : (
+      (row + col) % 2 == 0 ? "piece-brown" : "piece-biege"
+    );
 
-    if (row % 2 == 0) {
-      return col % 2 == 0 ? "var(--biege)" : "var(--brown)";
-    } else {
-      return col % 2 == 0 ? "var(--brown)" : "var(--biege)";
-    }
+  // Get correct icon or null if its not a piece
+  const icon =
+    color && type ? (
+      (color == "W" ? whiteIcons : blackIcons)[type]
+    ) : (
+      null
+    );
+
+  let eventMap = {
+    blocked: () => null,
+    default: "selectPiece",
+    active: "movePiece"
   }
-
-  const getAction = () => {
-    if (!selected && type && color) {
-      return selectPiece(row, col);
-    }
-
-    if (selected && active) {
-      return movePiece(row, col)
-    }
-  }
-
-  if (!type && !color) {
-    return (
-      <div className="piece"
-        style={{ background: getBackground() }}
-        onClick={() => getAction()}
-      />
-    )
-  }
-
-  const pieces = color == "W" ? whitePieces : blackPieces;
 
   return (
-    <div className="piece"
-      style={{ background: getBackground() }}
-      onClick={() => getAction()}
-    >
-      <img src={pieces[type]} />
+    <div className={`piece ${background}`} onClick={() => eventMap[state](row, col)}>
+      {icon ? <img src={icon} /> : null}
     </div>
   )
 };

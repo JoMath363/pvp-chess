@@ -1,27 +1,32 @@
-const board = [
-  ["BR", "BN", "BB", "BQ", "BK", "BB", "BN", "BR"],
-  ["BP", "BP", "BP", "BP", "BP", "BP", "BP", "BP"],
-  ["",    "",   "",   "",   "",   "",   "",   ""],
-  ["",    "",   "",   "",   "",   "",   "",   ""],
-  ["",    "",   "",   "",   "",   "",   "",   ""],
-  ["",    "",   "",   "",  "",   "",   "",   ""],
-  ["WP", "WP", "WP", "WP", "WP", "WP", "WP", "WP"],
-  ["WR", "WN", "WB", "WQ", "WK", "WB", "WN", "WR"] 
-];
-
 class ChessBoard {
-  constructor () {
-    this.turn = "W";
-    this.board = board.map((row) => row.map((piece) => piece != "" ? { color: piece[0], type: piece[1] } : null));
+  constructor() {
+    const board = [
+      ["BR", "BN", "BB", "BQ", "BK", "BB", "BN", "BR"],
+      ["BP", "BP", "BP", "BP", "BP", "BP", "BP", "BP"],
+      ["", "", "", "", "", "", "", ""],
+      ["", "", "", "", "", "", "", ""],
+      ["", "", "", "", "", "", "", ""],
+      ["", "", "", "", "", "", "", ""],
+      ["WP", "WP", "WP", "WP", "WP", "WP", "WP", "WP"],
+      ["WR", "WN", "WB", "WQ", "WK", "WB", "WN", "WR"]
+    ];
+
+    this.board = board.map((row) =>
+      row.map((piece) =>
+        piece != "" ? { color: piece[0], type: piece[1] } : null
+      ));
   }
 
-  getBoard() {
+  // Getters
+  get() {
     return this.board;
   }
 
-  getPieceMoves(row, col) {
+  // Events
+  getPieceMoves(target) {
+    const [row, col] = target;
     const { type, color } = this.board[row][col];
-  
+
     switch (type) {
     case "P": return this.getPawnMoves(row, col, color);
     case "N": return this.getKnightMoves(row, col, color);
@@ -33,63 +38,53 @@ class ChessBoard {
     }
   }
 
-  movePiece(fromRow, fromCol, toRow, toCol) {
-    const availableMoves = this.getPieceMoves(fromRow, fromCol);
+  movePiece(target, move) {
+    const [tRow, tCol] = target;
+    const [mRow, mCol] = move;
 
-    if (!availableMoves.some(m => m[0] == toRow && m[1] == toCol)){
-      throw new Error ("The move is not valid");
+    const availableMoves = this.getPieceMoves(tRow, tCol);
+
+    if (!availableMoves.some(m => m[0] == mRow && m[1] == mCol)) {
+      throw new Error("The move is not valid");
     }
-    
-    const piece = this.board[fromRow][fromCol];
-    this.board[toRow][toCol] = piece;
-    this.board[fromRow][fromCol] = null;
 
-    console.log("Move from:", [fromRow, fromCol], "to:", [toRow, toCol]);
-  }
-
-  findPlayerKing() {
-    for (let r = 0; r < 8; r++) {
-      for (let c = 0; c < 8; c++) {
-        let piece = this.board[r][c];
-        if (piece && piece.type == "K" && piece.color == this.turn) {
-          return [r, c];
-        }
-      }
-    }
+    const piece = this.board[tRow][tCol];
+    this.board[mRow][mCol] = piece;
+    this.board[tRow][tCol] = null;
   }
 
   // Verifications
-  verifyCheckmate(){
-    const [row, col] = this.findPlayerKing();
-    const kingInCheck = this.verifyCheck(row, col, this.turn);
-    const noMovesAvailable = this.getKingMoves(row, col, this.turn).length == 0;
+  verifyCheckmate(color) {
+    const [row, col] = this.findPlayerKing(color);
+    const kingInCheck = this.verifyCheck(row, col, color);
+    const noMovesAvailable = this.getKingMoves(row, col, color).length == 0;
 
     return kingInCheck && noMovesAvailable;
   }
 
-  verifyCheck(row, col, color) { 
+  verifyCheck(row, col, color) {
     const bishopMoves = this.getBishopMoves(row, col, color);
     const rookMoves = this.getRookMoves(row, col, color);
     const knightMoves = this.getKnightMoves(row, col, color);
 
     //Search for Diagonal Checks
-    for (const [r, c] of bishopMoves){
+    for (const [r, c] of bishopMoves) {
       let piece = this.board[r][c];
       if (piece && (piece.type == "Q" || piece.type == "B")) {
-        return true; 
+        return true;
       }
     }
 
     //Search for Vertical Checks
-    for (const [r, c] of rookMoves){
+    for (const [r, c] of rookMoves) {
       let piece = this.board[r][c];
-      if (piece && piece.type == "R") return true; 
+      if (piece && piece.type == "R") return true;
     }
 
     //Search for Knight Checks
-    for (const [r, c] of knightMoves){
+    for (const [r, c] of knightMoves) {
       let piece = this.board[r][c];
-      if (piece && piece.type == "N") return true; 
+      if (piece && piece.type == "N") return true;
     }
 
     //Search for Pawn Checks
@@ -97,7 +92,7 @@ class ChessBoard {
     for (const side of [1, -1]) {
       const r = row + dir;
       const c = col + side;
-      
+
       if (r >= 0 && r < 8 && c >= 0 && c < 8) {
         let piece = this.board[r][c];
         if (piece && piece.color != color && piece.type == "P") return true;
@@ -107,7 +102,19 @@ class ChessBoard {
     return false;
   }
 
-  // Moves For Each Piece Type
+  // Searchs
+  findPlayerKing(color) {
+    for (let r = 0; r < 8; r++) {
+      for (let c = 0; c < 8; c++) {
+        let piece = this.board[r][c];
+        if (piece && piece.type == "K" && piece.color == color) {
+          return [r, c];
+        }
+      }
+    }
+  }
+
+  // Moves
   getPawnMoves(row, col, color) {
     const [dir, initRow] = color === "W" ? [-1, 6] : [1, 1];
     const moves = [];
@@ -131,7 +138,7 @@ class ChessBoard {
       const r = row + dir;
       const c = col + side;
       const piece = this.board[r][c];
-      
+
       if (r >= 0 && r < 8 && c >= 0 && c < 8) {
         if (piece && piece.color != color) {
           moves.push([r, c]);
@@ -146,14 +153,14 @@ class ChessBoard {
     let moves = [];
 
     const directions = [
-      [-1,  2], // right up
-      [1,  2], // right down
+      [-1, 2], // right up
+      [1, 2], // right down
       [-1, -2], // left up
       [1, -2], // left down
       [-2, -1], // up left
       [-2, 1], // up right
-      [2,  -1], // down left
-      [2,  1], // down right
+      [2, -1], // down left
+      [2, 1], // down right
     ];
 
     for (const [dRow, dCol] of directions) {
@@ -176,9 +183,9 @@ class ChessBoard {
 
     const directions = [
       [-1, -1], // left up
-      [-1,  1], // right up
-      [ 1, -1], // left down
-      [ 1,  1], // right down
+      [-1, 1], // right up
+      [1, -1], // left down
+      [1, 1], // right down
     ];
 
     for (const [dRow, dCol] of directions) {
@@ -208,10 +215,10 @@ class ChessBoard {
     let moves = [];
 
     const directions = [
-      [0,  1], // right
+      [0, 1], // right
       [0, -1], // left
       [-1, 0], // up
-      [1,  0], // down
+      [1, 0], // down
     ];
 
     for (const [dRow, dCol] of directions) {
@@ -237,15 +244,15 @@ class ChessBoard {
     return moves;
   }
 
-  getQueenMoves(row, col, color){
+  getQueenMoves(row, col, color) {
     return [...this.getBishopMoves(row, col, color), ...this.getRookMoves(row, col, color)];
   }
 
   getKingMoves(row, col, color) {
     let moves = [];
 
-    for (let r = row - 1; r < row + 2; r ++) {
-      for (let c = col - 1; c < col + 2; c ++) {
+    for (let r = row - 1; r < row + 2; r++) {
+      for (let c = col - 1; c < col + 2; c++) {
         if (r >= 0 && r < 8 && c >= 0 && c < 8) {
           let piece = this.board[r][c];
           if (piece && piece.color == color) continue;
@@ -258,7 +265,8 @@ class ChessBoard {
     return moves;
   }
 
-  visualize(){
+  // Extras
+  visualize() {
     const chessEmotes = {
       WP: "♙", // White Pawn
       WR: "♖", // White Rook
@@ -266,7 +274,7 @@ class ChessBoard {
       WB: "♗", // White Bishop
       WQ: "♕", // White Queen
       WK: "♔", // White King
-    
+
       BP: "♟", // Black Pawn
       BR: "♜", // Black Rook
       BN: "♞", // Black Knight
