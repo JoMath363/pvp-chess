@@ -1,5 +1,7 @@
 import "./Piece.css";
 
+import MatchEvents from "../../Pages/Match/MatchEvents.js";
+
 import white_king from "../Assets/white_king.png"
 import white_queen from "../Assets/white_queen.png"
 import white_bishop from "../Assets/white_bishop.png"
@@ -32,17 +34,12 @@ const blackIcons = {
   "P": black_pawn,
 }
 
-const Piece = ({ piece, position }) => {
+const Piece = ({ piece, position, socket }) => {
   const [row, col] = position;
   const { color, type, state } = piece;
 
   // Get Intercalated Color for Board Squares
-  const background =
-    state == "active" ? (
-      "piece-active"
-    ) : (
-      (row + col) % 2 == 0 ? "piece-brown" : "piece-biege"
-    );
+  const background = (row + col) % 2 == 0 ? "piece-bg1" : "piece-bg2";
 
   // Get correct icon or null if its not a piece
   const icon =
@@ -52,14 +49,19 @@ const Piece = ({ piece, position }) => {
       null
     );
 
-  let eventMap = {
+  // Set events for each state
+  const eventMap = {
     blocked: () => null,
-    default: "selectPiece",
-    active: "movePiece"
+    selected: () => null,
+    default: MatchEvents.selectPiece,
+    active: MatchEvents.movePiece,
   }
 
   return (
-    <div className={`piece ${background}`} onClick={() => eventMap[state](row, col)}>
+    <div
+      className={`piece ${background} piece-${state}`}
+      onClick={() => eventMap[state](socket, position)}
+    >
       {icon ? <img src={icon} /> : null}
     </div>
   )

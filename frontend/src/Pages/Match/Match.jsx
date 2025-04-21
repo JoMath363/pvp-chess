@@ -12,8 +12,9 @@ const Match = (props) => {
   const [board, setBoard] = useState([]);
 
   // Handle incoming board data
-  socket.on("start", (boardData) => {
+  socket.on("update-board", (boardData) => {
     setBoard(boardData);
+    console.log(boardData);
   });
 
   return (
@@ -21,7 +22,10 @@ const Match = (props) => {
       <Topbar />
       <div className="match">
         <main className="match-main">
-          <Board board={board} setBoard={setBoard} />
+          <Board
+            board={board}
+            socket={socket}
+          />
         </main>
 
         <aside className="match-aside">

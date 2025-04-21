@@ -1,14 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
 :root {
-  --brown: #964d22;
   --dark-brown: #241a0f;
-  --biege: #eedc97;
-  --gray: #7c7c7c;
-  --active: lightblue;
-  --light-gray:#f0f0f0;
   --background:#1c1c24;
   --surface:#2a2a33;
+  --light-gray:#f0f0f0;
+  --brown: #964d22;
+  --biege: #eedc97;
+  --selected: #e7e76b;
+  --active: #add8e6;
 }
 
 * {

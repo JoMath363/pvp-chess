@@ -42,12 +42,6 @@ class ChessBoard {
     const [tRow, tCol] = target;
     const [mRow, mCol] = move;
 
-    const availableMoves = this.getPieceMoves(tRow, tCol);
-
-    if (!availableMoves.some(m => m[0] == mRow && m[1] == mCol)) {
-      throw new Error("The move is not valid");
-    }
-
     const piece = this.board[tRow][tCol];
     this.board[mRow][mCol] = piece;
     this.board[tRow][tCol] = null;

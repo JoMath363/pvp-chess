@@ -1,18 +1,34 @@
 .piece {
+  overflow: hidden;
+
   & img {
     height: 100%;
     width: 100%;
   }
 }
 
-.piece-brown {
+.piece-bg1{
   background: var(--brown);
 }
 
-.piece-biege {
+.piece-bg2 {
   background: var(--biege);
 }
 
+.piece-default {
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--selected);
+  }
+}
+
+.piece-selected {
+  background-color: var(--selected);
+}
+
 .piece-active {
+  cursor: pointer;
+
   background: var(--active);
 }
