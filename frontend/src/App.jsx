@@ -23,7 +23,7 @@ const appRouter = createBrowserRouter([
     element: <Login/>
   },
   { 
-    path: "/match",
+    path: "/match/:matchId",
     element: <Match/>
   },
 ])

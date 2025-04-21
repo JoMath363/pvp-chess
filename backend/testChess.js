@@ -1,11 +1,11 @@
-import MatchMannager from "./src/match/MatchMannager.js";
+import MatchManager from "./src/match/MatchManager.js";
 
 /* const test = (message, func) => {
   console.log(message, func() ? "passed" : "failed");
 }; */
 
 export default () => {
-  const game = new MatchMannager();
+  const game = new MatchManager();
 
   let test = game.getDefaultBoard();
 

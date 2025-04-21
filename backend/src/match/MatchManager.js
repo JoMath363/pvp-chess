@@ -1,25 +1,40 @@
 import ChessBoard from "./ChessBoard.js";
 
-class MatchMannager {
-  constructor(socket) {
+class MatchManager {
+  constructor() {
     this.board = new ChessBoard();
     this.turn = "W";
     this.selected = null;
-    this.socket = socket;
   }
 
-  getDefaultBoard() {
-    const board = this.board.get();
+  getDefaultBoard(color) {
+    let newBoard;
 
-    return board.map((row) => 
-      row.map((piece) => 
-        piece ? (
-          {...piece, state: piece.color == this.turn ? "default" : "blocked"}
-        ) : (
-          {state: "blocked"}
-        )
-      )
-    );
+    if (color == this.turn) {
+      newBoard = this.board.get()
+        .map((row) => 
+          row.map((piece) => 
+            piece ? (
+              {...piece, state: piece.color == this.turn ? "default" : "blocked"}
+            ) : (
+              {state: "blocked"}
+            )
+          )
+        );
+    } else {
+      newBoard = this.board.get()
+        .map((row) => 
+          row.map((piece) => 
+            piece ? (
+              {...piece, state: "blocked"}
+            ) : (
+              {state: "blocked"}
+            )
+          )
+        );
+    }
+
+    return color == "W" ? newBoard : newBoard.reverse();
   }
 
   getActiveBoard() {
@@ -59,4 +74,4 @@ class MatchMannager {
   }
 }
 
-export default MatchMannager;
+export default MatchManager;
