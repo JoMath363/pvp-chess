@@ -19,7 +19,7 @@ class MatchManager {
       })
     );
 
-    const inTurn = outTurn.map(row =>
+    const inTurn = structuredClone(outTurn).map(row =>
       row.map(piece => {
         if (piece.color && piece.color === this.turn) {
           return { ...piece, state: "default" };
@@ -34,11 +34,11 @@ class MatchManager {
 
       inTurn.map(row => row.map(piece => piece.state = "blocked"));
 
-      inTurn[row][col].selected = "selected";
-
       for (const [r, c] of moves) {
         inTurn[r][c].state = "active";
       }
+      
+      inTurn[row][col].state = "selected";
     }
 
     if (this.turn == "W") {
@@ -49,17 +49,11 @@ class MatchManager {
   }
   
   getPosition(position) {
-    let pos;
-    console.log(position);
-
     if (this.turn == "B") {
-      pos = [7 - position[0], position[1]];
+      return [7 - position[0], position[1]];
     } else {
-      pos = position;
+      return position;
     }
-
-    console.log(pos);
-    return pos;
   }
 
   moveSelectedPiece(move) {
