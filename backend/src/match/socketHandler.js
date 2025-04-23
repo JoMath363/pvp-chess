@@ -8,23 +8,23 @@ const socketHandler = (io) => {
     console.log("✅ Client connected", socket.id);
 
     socket.on("join-match", (matchId) => {
-      const room = io.sockets.adapter.rooms.get(matchId);
-      const numPlayers = room ? room.size : 0;
+      if (!matchPlayers[matchId]) matchPlayers[matchId] = {};
 
-      if (numPlayers >= 2) {
+      if (Object.values(matchPlayers[matchId]).includes(socket.id)) {
+        return;
+      }
+
+      if (matchPlayers[matchId]["W"] && matchPlayers[matchId]["B"]) {
         socket.emit("match-full", matchId);
         return;
       }
 
+      let color = "W";
+      if (matchPlayers[matchId]["W"] && !matchPlayers[matchId]["B"]) {
+        color = "B";
+      } 
+
       socket.join(matchId);
-
-      const color = numPlayers === 0 ? "W" : "B";
-
-      if (!matchPlayers[matchId]) matchPlayers[matchId] = {};
-      if (Object.values(matchPlayers[matchId]).some(id => id == socket.id)) {
-        return;
-      };
-
       matchPlayers[matchId][color] = socket.id;
 
       if (!matchManagers[matchId]) {
@@ -32,18 +32,38 @@ const socketHandler = (io) => {
       }
 
       socket.emit("match-joined", { matchId, color });
-      socket.to(matchId).emit("opponent-joined", { color: color == "W" ? "W" : "B" });
+      socket.to(matchId).emit("opponent-joined", { color: color === "W" ? "B" : "W" });
 
       console.log(`${socket.id} joined match ${matchId} as ${color}`);
+
+      socket.data.matchId = matchId;
+      socket.data.color = color;
+    });
+
+    socket.on("disconnect", () => {
+      const matchId = socket.data.matchId;
+      const color = socket.data.color;
+
+      if (!matchId || !matchPlayers[matchId]) return;
+
+      console.log(`Client disconnected: ${socket.id} from match ${matchId}`);
+
+      socket.to(matchId).emit("opponent-disconnected", { color });
+
+      delete matchPlayers[matchId][color];
+
+      if (Object.keys(matchPlayers[matchId]).length === 0) {
+        delete matchPlayers[matchId];
+        delete matchManagers[matchId];
+        console.log(`Match ${matchId} cleaned up`);
+      }
     });
 
     socket.on("request-board", (matchId) => {
       const manager = matchManagers[matchId];
-      const players = matchPlayers[matchId];
-      const color = Object.keys(players).find(clr => players[clr] == socket.id);
-      console.log(color);
-      
-      io.to(matchId).emit("update-board", manager.getDefaultBoard(color));
+      const color = socket.data.color;
+
+      socket.emit("update-board", manager.getDefaultBoard(color));
     });
 
     /* socket.on("select", (selected) => {
