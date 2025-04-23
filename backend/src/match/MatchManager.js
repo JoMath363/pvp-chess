@@ -7,40 +7,59 @@ class MatchManager {
     this.selected = null;
   }
 
-  getDefaultBoard(color) {
-    const isCurrentTurn = color === this.turn;
-    const board = this.board.get().map(row =>
+  getBoards() {
+    const board = this.board.get();
+
+    const outTurn = board.map(row =>
       row.map(piece => {
         if (piece) {
-          const state = isCurrentTurn ? (
-            (piece.color === this.turn ? "default" : "blocked")
-          ) : (
-            "blocked"
-          );
-
-          return { ...piece, state };
+          return { ...piece, state: "blocked" };
         }
         return { state: "blocked" };
       })
     );
 
-    return color == "W" ? board : board.reverse();
-  }
+    const inTurn = outTurn.map(row =>
+      row.map(piece => {
+        if (piece.color && piece.color === this.turn) {
+          return { ...piece, state: "default" };
+        }
+        return piece;
+      })
+    );
 
-  getActiveBoard() {
-    let [row, col] = this.selected;
-    let board = this.getDefaultBoard();
-    let moves = this.board.getPieceMoves(this.selected);
+    if (this.selected) {
+      const [row, col] = this.selected;
+      const moves = this.board.getPieceMoves(this.selected);
 
-    board.map(row => row.map(piece => piece.state = "blocked"));
+      inTurn.map(row => row.map(piece => piece.state = "blocked"));
 
-    for (const [r, c] of moves) {
-      board[r][c].state = "active";
+      inTurn[row][col].selected = "selected";
+
+      for (const [r, c] of moves) {
+        inTurn[r][c].state = "active";
+      }
     }
 
-    board[row][col].state = "selected";
+    if (this.turn == "W") {
+      return { whiteBoard: inTurn, blackBoard: outTurn.toReversed() };
+    } else {
+      return { whiteBoard: outTurn, blackBoard: inTurn.toReversed() };
+    }
+  }
+  
+  getPosition(position) {
+    let pos;
+    console.log(position);
 
-    return board;
+    if (this.turn == "B") {
+      pos = [7 - position[0], position[1]];
+    } else {
+      pos = position;
+    }
+
+    console.log(pos);
+    return pos;
   }
 
   moveSelectedPiece(move) {

@@ -32,7 +32,7 @@ const socketHandler = (io) => {
       }
 
       socket.emit("match-joined", { matchId, color });
-      socket.to(matchId).emit("opponent-joined", { color: color === "W" ? "B" : "W" });
+      socket.to(matchId).emit("opponent-joined", { color: color === "W" ? "W" : "B" });
 
       console.log(`${socket.id} joined match ${matchId} as ${color}`);
 
@@ -59,25 +59,45 @@ const socketHandler = (io) => {
       }
     });
 
-    socket.on("request-board", (matchId) => {
-      const manager = matchManagers[matchId];
+    socket.on("request-board", () => {
+      const manager = matchManagers[socket.data.matchId];
       const color = socket.data.color;
-
-      socket.emit("update-board", manager.getDefaultBoard(color));
+      
+      const { whiteBoard, blackBoard } = manager.getBoards();
+      
+      if (color == "W") {
+        socket.emit("update-board", whiteBoard);
+      } else {
+        socket.emit("update-board", blackBoard);
+      }
     });
 
-    /* socket.on("select", (selected) => {
-      mannager.selected = selected;
+    socket.on("select", (selected) => {
+      const matchId = socket.data.matchId;
+      const manager = matchManagers[matchId];
+      
+      const playerSelected = manager.getPosition(selected);
+      manager.selected = playerSelected;
 
-      socket.emit("update-board", mannager.getActiveBoard());
+      const { whiteBoard, blackBoard } = manager.getBoards();
+
+      io.to(matchPlayers[matchId]["W"]).emit("update-board", whiteBoard);
+      io.to(matchPlayers[matchId]["B"]).emit("update-board", blackBoard);
     });
 
     socket.on("move", (move) => {
-      mannager.moveSelectedPiece(move);
-      mannager.passPlayerTurn();
+      const matchId = socket.data.matchId;
+      const manager = matchManagers[matchId];
+      
+      const playerMove = manager.getPosition(move);
+      manager.moveSelectedPiece(playerMove);
+      manager.passPlayerTurn();
 
-      socket.emit("update-board", mannager.getDefaultBoard());
-    }); */
+      const { whiteBoard, blackBoard } = manager.getBoards();
+
+      io.to(matchPlayers[matchId]["W"]).emit("update-board", whiteBoard);
+      io.to(matchPlayers[matchId]["B"]).emit("update-board", blackBoard);
+    });
   });
 };
 
