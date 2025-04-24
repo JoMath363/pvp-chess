@@ -7,6 +7,11 @@ class MatchManager {
     this.selected = null;
   }
 
+  // Getters
+  getTurn() {
+    return this.turn;
+  }
+
   getBoards() {
     const board = this.board.get();
 
@@ -48,7 +53,7 @@ class MatchManager {
     }
   }
   
-  getPosition(position) {
+  getConvertedPosition(position) {
     if (this.turn == "B") {
       return [7 - position[0], position[1]];
     } else {
@@ -56,6 +61,27 @@ class MatchManager {
     }
   }
 
+  getTurnResult() {
+    const opponentColor = this.turn == "W" ? "B" : "W";
+    console.log("oponent color", opponentColor);
+    const [row, col] = this.board.findPlayerKing(opponentColor);
+
+    if (this.board.verifyCheck(row, col, opponentColor)) {
+      if (this.board.verifyCheckmate(row, col, opponentColor)) {
+        return "mate";
+      }
+      return "check";
+    }; 
+
+    return "ongoing";
+  }
+
+  // Verifications
+  canMove(position) {
+    return this.board.getPieceMoves(position).length > 0;
+  }
+
+  // Actions
   moveSelectedPiece(move) {
     const validMoves = this.board.getPieceMoves(this.selected);
 
@@ -68,12 +94,16 @@ class MatchManager {
     }
   }
 
+  selectPlayerKing() {
+    this.selected = this.board.findPlayerKing(this.turn);
+  }
+
+  selectTargetPiece(target) {
+    this.selected = target;
+  }
+
   passPlayerTurn() {
-    if (this.turn == "W") {
-      this.turn = "B";
-    } else {
-      this.turn = "W";
-    }
+    this.turn = this.turn == "W" ? "B" : "W";
   }
 }
 

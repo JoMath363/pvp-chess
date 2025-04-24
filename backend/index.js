@@ -4,7 +4,6 @@ import cors from "cors";
 import http from "http";
 import { Server } from "socket.io";
 import socketHandler from "./src/match/socketHandler.js";
-import testChess from "./testChess.js";
 
 dotenv.config();
 const port = process.env.PORT || 3000;
@@ -26,10 +25,7 @@ export default io;
 
 socketHandler(io);
 
-
 server.listen(port, () => {
   console.log(`server listening on: http://localhost:${port}/`);
 });
-/* 
-testChess(); */
 

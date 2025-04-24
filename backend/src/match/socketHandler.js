@@ -7,6 +7,7 @@ const socketHandler = (io) => {
   io.on("connection", (socket) => {
     console.log("✅ Client connected", socket.id);
 
+    // Connection Events
     socket.on("join-match", (matchId) => {
       if (!matchPlayers[matchId]) matchPlayers[matchId] = {};
 
@@ -59,6 +60,7 @@ const socketHandler = (io) => {
       }
     });
 
+    // Match Events
     socket.on("request-board", () => {
       const manager = matchManagers[socket.data.matchId];
       const color = socket.data.color;
@@ -75,9 +77,11 @@ const socketHandler = (io) => {
     socket.on("select", (selected) => {
       const matchId = socket.data.matchId;
       const manager = matchManagers[matchId];
+      const playerSelected = manager.getConvertedPosition(selected);
       
-      const playerSelected = manager.getPosition(selected);
-      manager.selected = playerSelected;
+      if(!manager.canMove(playerSelected)) return;
+
+      manager.selectTargetPiece(playerSelected);
 
       const { whiteBoard, blackBoard } = manager.getBoards();
 
@@ -88,16 +92,29 @@ const socketHandler = (io) => {
     socket.on("move", (move) => {
       const matchId = socket.data.matchId;
       const manager = matchManagers[matchId];
-      
-      const playerMove = manager.getPosition(move);
+      const playerMove = manager.getConvertedPosition(move);
+  
       manager.moveSelectedPiece(playerMove);
-      manager.passPlayerTurn();
+      
+      const turnResult = manager.getTurnResult();
+
+      if (turnResult == "mate") {
+        io.to(matchId).emit("win", manager.getTurn());
+      } else {
+        manager.passPlayerTurn();
+
+        if (turnResult == "check") {
+          manager.selectPlayerKing();
+        };
+      }
 
       const { whiteBoard, blackBoard } = manager.getBoards();
 
       io.to(matchPlayers[matchId]["W"]).emit("update-board", whiteBoard);
       io.to(matchPlayers[matchId]["B"]).emit("update-board", blackBoard);
     });
+
+    // Chat Events
   });
 };
 

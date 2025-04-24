@@ -3,13 +3,14 @@ class ChessBoard {
     const board = [
       ["BR", "BN", "BB", "BQ", "BK", "BB", "BN", "BR"],
       ["BP", "BP", "BP", "BP", "BP", "BP", "BP", "BP"],
-      ["", "", "", "", "", "", "", ""],
-      ["", "", "", "", "", "", "", ""],
-      ["", "", "", "", "", "", "", ""],
-      ["", "", "", "", "", "", "", ""],
+      ["",    "",   "",   "",   "",   "",   "",   ""],
+      ["",    "",   "",   "",   "",   "",   "",   ""],
+      ["",    "",   "",   "",   "",   "",   "",   ""],
+      ["",    "",   "",   "",  "",   "",   "",   ""],
       ["WP", "WP", "WP", "WP", "WP", "WP", "WP", "WP"],
-      ["WR", "WN", "WB", "WQ", "WK", "WB", "WN", "WR"]
+      ["WR", "WN", "WB", "WQ", "WK", "WB", "WN", "WR"] 
     ];
+    
 
     this.board = board.map((row) =>
       row.map((piece) =>
@@ -48,12 +49,8 @@ class ChessBoard {
   }
 
   // Verifications
-  verifyCheckmate(color) {
-    const [row, col] = this.findPlayerKing(color);
-    const kingInCheck = this.verifyCheck(row, col, color);
-    const noMovesAvailable = this.getKingMoves(row, col, color).length == 0;
-
-    return kingInCheck && noMovesAvailable;
+  verifyCheckmate(row, col, color) {
+    return this.getKingMoves(row, col, color).length == 0;
   }
 
   verifyCheck(row, col, color) {
@@ -72,7 +69,7 @@ class ChessBoard {
     //Search for Vertical Checks
     for (const [r, c] of rookMoves) {
       let piece = this.board[r][c];
-      if (piece && piece.type == "R") return true;
+      if (piece && (piece.type == "Q" || piece.type == "R")) return true;
     }
 
     //Search for Knight Checks
@@ -90,6 +87,16 @@ class ChessBoard {
       if (r >= 0 && r < 8 && c >= 0 && c < 8) {
         let piece = this.board[r][c];
         if (piece && piece.color != color && piece.type == "P") return true;
+      }
+    }
+
+    // Check for King Checks
+    for (let r = row - 1; r < row + 2; r++) {
+      for (let c = col - 1; c < col + 2; c++) {
+        if (r >= 0 && r < 8 && c >= 0 && c < 8) {
+          let piece = this.board[r][c];
+          if (piece && piece.color != color && piece.type == "K") return true;
+        }
       }
     }
 
