@@ -1,15 +1,24 @@
 import "./InfoPanel.css";
 
 import { FaHandshake, FaFlag } from "react-icons/fa";
+import getPieceIcon from "../Extras/getPieceAssets.js";
+import { useEffect, useRef } from "react";
 
-const InfoPanel = (props) => {
+const InfoPanel = ({ info }) => {
+  const historyRef = useRef(null);
+
+  useEffect(() => {
+    if (historyRef.current) {
+      historyRef.current.scrollTop = historyRef.current.scrollHeight;
+    }
+  }, [info])
+
   return (
     <div className="info-panel">
       <div className="info-panel-player">
         <div className="info-panel-player-stats">
-          <p>White (You)</p>
+          <p>White <span>{info.playerColor == "W" ? "(you)" : "(opponent)"}</span></p>
         </div>
-
         <div className="info-panel-captured">
 
         </div>
@@ -17,7 +26,7 @@ const InfoPanel = (props) => {
 
       <div className="info-panel-player">
         <div className="info-panel-player-stats">
-          <p>Black (Opponent)</p>
+          <p>Black <span>{info.playerColor == "B" ? "(you)" : "(opponent)"}</span></p>
         </div>
         <div className="info-panel-captured">
 
@@ -37,9 +46,37 @@ const InfoPanel = (props) => {
       </div>
 
       <div className="info-panel-history">
-          <p>Move History</p>
-      </div>
+        <p>Move History</p>
+        <div className="history" ref={historyRef}>
+          {info.moveHistory.map((round, i) => {
+            const [whiteMove, blackMove] = round;
 
+            const whiteIcon = whiteMove ? getPieceIcon(whiteMove[0], whiteMove[1]) : null;
+            const whitePos = whiteMove ? whiteMove[2] : "";
+
+            const blackIcon = blackMove ? getPieceIcon(blackMove[0], blackMove[1]) : null;
+            const blackPos = blackMove ? blackMove[2] : "";
+
+            return (
+              <div key={i} className="history-round">
+                <span className="history-number">{i + 1}.</span>
+                {
+                  whiteMove ? <span className="history-move">
+                    <img src={whiteIcon} />
+                    <span>{whitePos}</span>
+                  </span> : null
+                }
+                {
+                  blackMove ? <span className="history-move">
+                    <img src={blackIcon} />
+                    <span>{blackPos}</span>
+                  </span> : null
+                }
+              </div>
+            );
+          })}
+        </div>
+      </div>
     </div>
   )
 };

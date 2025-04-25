@@ -2,4 +2,5 @@
   height: 100%;
 
   border: var(--accent) solid 1px;
+  border-radius: 5px;
 }

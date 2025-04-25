@@ -14,10 +14,11 @@ const socket = io("http://localhost:3000", {
 });
 
 const infoTemplate = {
+  playerColor: "W",
   currentTurn: "W",
   whiteCaptured: [],
   blackCaptured: [],
-  moveHistory: [],
+  moveHistory: []
 }
 
 const Match = (props) => {
@@ -29,7 +30,7 @@ const Match = (props) => {
     if (!socket.connected) {
       socket.connect();
     }
-  
+
     registerListeners(socket, setBoard);
     joinMatch(socket, matchId);
     requestBoard(socket, matchId);
@@ -47,7 +48,7 @@ const Match = (props) => {
         </main>
 
         <aside className="match-aside">
-          <InfoPanel {...info}/>
+          <InfoPanel info={info} />
           <Chat />
         </aside>
       </div>
