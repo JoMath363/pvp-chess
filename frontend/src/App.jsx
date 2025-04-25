@@ -2,8 +2,6 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Lading from "./Pages/Landing/Landing.jsx";
 import Home from "./Pages/Home/Home.jsx";
 import Match from "./Pages/Match/Match.jsx";
-import Signup from "./Pages/Login/Signup.jsx";
-import Login from "./Pages/Login/Login.jsx";
 
 const appRouter = createBrowserRouter([
   { 
@@ -13,14 +11,6 @@ const appRouter = createBrowserRouter([
   { 
     path: "/home",
     element: <Home/>
-  },
-  { 
-    path: "/signup",
-    element: <Signup/>
-  },
-  { 
-    path: "/login",
-    element: <Login/>
   },
   { 
     path: "/match/:matchId",

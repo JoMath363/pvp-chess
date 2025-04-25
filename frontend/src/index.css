@@ -4,14 +4,15 @@
   --dark-brown: #241a0f;
   --background:#1c1c24;
   --surface:#2a2a33;
-  --light-gray:#f0f0f0;
-  --brown: #964d22;
-  --biege: #eedc97;
+  --accent:#f0f0f0;
+  --board-clr1: #eedc97;
+  --board-clr2: #964d22;
   --selected: #e7e76b;
   --active: #add8e6;
 }
 
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
 }

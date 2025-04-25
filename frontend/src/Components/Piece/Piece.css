@@ -8,11 +8,11 @@
 }
 
 .piece-bg1{
-  background: var(--brown);
+  background: var(--board-clr1);
 }
 
 .piece-bg2 {
-  background: var(--biege);
+  background: var(--board-clr2);
 }
 
 .piece-default {

@@ -6,45 +6,34 @@ import Chat from "../../Components/Chat/Chat";
 import io from "socket.io-client";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { registerListeners } from "./listeners";
+import { joinMatch, requestBoard } from "./emiters";
 
 const socket = io("http://localhost:3000", {
   autoConnect: false
 });
 
+const infoTemplate = {
+  currentTurn: "W",
+  whiteCaptured: [],
+  blackCaptured: [],
+  moveHistory: [],
+}
+
 const Match = (props) => {
   const { matchId } = useParams();
   const [board, setBoard] = useState([]);
+  const [info, setInfo] = useState(infoTemplate);
 
   useEffect(() => {
     if (!socket.connected) {
       socket.connect();
     }
   
-    socket.emit("join-match", matchId);
-
-    socket.emit("request-board", matchId);
-
-    socket.on("match-full", () => {
-      // Warning and then send back to home;
-    });
-  
-    socket.on("match-joined", ({ color }) => {
-      console.log("Joined as", color);
-    });
-  
-    socket.on("opponent-joined", ({ color }) => {
-      console.log("Opponent joined as", color);
-    });
-  
-    return () => {
-      socket.off("match-joined");
-      socket.off("opponent-joined");
-    };
+    registerListeners(socket, setBoard);
+    joinMatch(socket, matchId);
+    requestBoard(socket, matchId);
   }, []);
-
-  socket.on("update-board", (boardData) => {
-    setBoard(boardData);
-  });
 
   return (
     <>
@@ -58,7 +47,7 @@ const Match = (props) => {
         </main>
 
         <aside className="match-aside">
-          <InfoPanel />
+          <InfoPanel {...info}/>
           <Chat />
         </aside>
       </div>

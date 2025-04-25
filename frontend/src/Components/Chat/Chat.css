@@ -1,0 +1,5 @@
+.chat {
+  height: 100%;
+
+  border: var(--accent) solid 1px;
+}

@@ -1,17 +1,16 @@
 import "./Topbar.css";
-
-import logo_icon from "../Assets/logo_light_gray.svg";
+import { FaChessQueen } from "react-icons/fa";
 
 const Topbar = (props) => {
   return (
     <div className="topbar">
       <div className="topbar-logo">
-        <img src={logo_icon}/>
+        <FaChessQueen className="topbar-logo-icon"/>
         <span>PVP Chess</span>
       </div>
 
       <div className="topbar-content">
-          
+
       </div>
     </div>
   )
