@@ -13,25 +13,23 @@ const socket = io("http://localhost:3000", {
   autoConnect: false
 });
 
-const infoTemplate = {
-  playerColor: "W",
-  currentTurn: "W",
-  whiteCaptured: [],
-  blackCaptured: [],
-  moveHistory: []
-}
-
 const Match = (props) => {
   const { matchId } = useParams();
   const [board, setBoard] = useState([]);
-  const [info, setInfo] = useState(infoTemplate);
+  const [info, setInfo] = useState({
+    playerColor: "W",
+    currentTurn: "W",
+    whiteCaptured: [],
+    blackCaptured: [],
+    moveHistory: []
+  });
 
   useEffect(() => {
     if (!socket.connected) {
       socket.connect();
     }
 
-    registerListeners(socket, setBoard);
+    registerListeners(socket, setBoard, setInfo);
     joinMatch(socket, matchId);
     requestBoard(socket, matchId);
   }, []);

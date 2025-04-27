@@ -20,7 +20,14 @@ const InfoPanel = ({ info }) => {
           <p>White <span>{info.playerColor == "W" ? "(you)" : "(opponent)"}</span></p>
         </div>
         <div className="info-panel-captured">
-
+          {
+            info.whiteCaptured.map((piece, i) =>
+              <div className="info-panel-captured-piece" key={i} >
+                <img src={getPieceIcon("B", piece[0])} />
+                <span>x{piece[1]}</span>
+              </div>
+            )
+          }
         </div>
       </div>
 
@@ -29,7 +36,14 @@ const InfoPanel = ({ info }) => {
           <p>Black <span>{info.playerColor == "B" ? "(you)" : "(opponent)"}</span></p>
         </div>
         <div className="info-panel-captured">
-
+          {
+            info.blackCaptured.map((piece, i) =>
+              <div className="info-panel-captured-piece" key={i} >
+                <img src={getPieceIcon("W", piece[0])} />
+                <span>x{piece[1]}</span>
+              </div>
+            )
+          }
         </div>
       </div>
 

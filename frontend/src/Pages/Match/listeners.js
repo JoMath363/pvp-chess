@@ -1,4 +1,4 @@
-export const registerListeners = (socket, setBoard) => {
+export const registerListeners = (socket, setBoard, setInfo) => {
   socket.on("match-full", () => {
     // Warning and then send back to home;
   });
@@ -11,7 +11,8 @@ export const registerListeners = (socket, setBoard) => {
     console.log("Opponent joined as", color);
   });
   
-  socket.on("update-board", (boardData) => {
-    setBoard(boardData);
+  socket.on("update-data", (data) => {
+    setBoard(data.board);
+    setInfo(data.info);
   });
 }
