@@ -11,7 +11,7 @@ export const joinMatch = (socket, matchId) => {
 }
 
 export const requestBoard = (socket, matchId) => {
-  socket.emit("request-board", matchId);
+  socket.emit("request-data", matchId);
 }
 
 

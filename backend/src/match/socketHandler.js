@@ -61,40 +61,33 @@ const socketHandler = (io) => {
     });
 
     // Match Events
-    socket.on("request-board", () => {
+    socket.on("request-data", () => {
       const manager = matchManagers[socket.data.matchId];
       const color = socket.data.color;
-      
-      const { whiteBoard, blackBoard } = manager.getBoards();
-      
-      if (color == "W") {
-        socket.emit("update-board", whiteBoard);
-      } else {
-        socket.emit("update-board", blackBoard);
-      }
+
+      const data = manager.getCurrentData(color);
+
+      socket.emit("update-data", data);
     });
 
     socket.on("select", (selected) => {
       const matchId = socket.data.matchId;
       const manager = matchManagers[matchId];
-      const playerSelected = manager.getConvertedPosition(selected);
       
-      if(!manager.canMove(playerSelected)) return;
+      if(!manager.canMove(selected)) return;
 
-      manager.selectTargetPiece(playerSelected);
+      manager.selectTargetPiece(selected);
 
-      const { whiteBoard, blackBoard } = manager.getBoards();
-
-      io.to(matchPlayers[matchId]["W"]).emit("update-board", whiteBoard);
-      io.to(matchPlayers[matchId]["B"]).emit("update-board", blackBoard);
+      io.to(matchPlayers[matchId]["W"]).emit("update-data", manager.getCurrentData("W"));
+      io.to(matchPlayers[matchId]["B"]).emit("update-data", manager.getCurrentData("B"));
     });
 
     socket.on("move", (move) => {
       const matchId = socket.data.matchId;
       const manager = matchManagers[matchId];
-      const playerMove = manager.getConvertedPosition(move);
   
-      manager.moveSelectedPiece(playerMove);
+      manager.moveSelectedPiece(move);
+      manager.updateHistory(move);
       
       const turnResult = manager.getTurnResult();
 
@@ -108,10 +101,8 @@ const socketHandler = (io) => {
         };
       }
 
-      const { whiteBoard, blackBoard } = manager.getBoards();
-
-      io.to(matchPlayers[matchId]["W"]).emit("update-board", whiteBoard);
-      io.to(matchPlayers[matchId]["B"]).emit("update-board", blackBoard);
+      io.to(matchPlayers[matchId]["W"]).emit("update-data", manager.getCurrentData("W"));
+      io.to(matchPlayers[matchId]["B"]).emit("update-data", manager.getCurrentData("B"));
     });
 
     // Chat Events

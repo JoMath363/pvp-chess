@@ -21,12 +21,13 @@ const InfoPanel = ({ info }) => {
         </div>
         <div className="info-panel-captured">
           {
-            info.whiteCaptured.map((piece, i) =>
-              <div className="info-panel-captured-piece" key={i} >
-                <img src={getPieceIcon("B", piece[0])} />
-                <span>x{piece[1]}</span>
-              </div>
-            )
+            info.whiteCaptured.map((piece, i) => {
+              return piece[1] > 0 ? (
+                <div className="info-panel-captured-piece" key={i} >
+                  <img src={getPieceIcon("B", piece[0])} />
+                  <span>x{piece[1]}</span>
+                </div>) : null;
+            })
           }
         </div>
       </div>
@@ -37,12 +38,13 @@ const InfoPanel = ({ info }) => {
         </div>
         <div className="info-panel-captured">
           {
-            info.blackCaptured.map((piece, i) =>
-              <div className="info-panel-captured-piece" key={i} >
-                <img src={getPieceIcon("W", piece[0])} />
-                <span>x{piece[1]}</span>
-              </div>
-            )
+            info.blackCaptured.map((piece, i) => {
+              return piece[1] > 0 ? (
+                <div className="info-panel-captured-piece" key={i} >
+                  <img src={getPieceIcon("W", piece[0])} />
+                  <span>x{piece[1]}</span>
+                </div>) : null;
+            })
           }
         </div>
       </div>
