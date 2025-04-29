@@ -1,13 +1,14 @@
 import "./Match.css";
 import Topbar from "../../Components/Topbar/Topbar";
 import Board from "../../Components/Board/Board";
-import InfoPanel from "../../Components/InfoPanel/InfoPanel";
+import Panel from "../../Components/Panel/Panel";
 import Chat from "../../Components/Chat/Chat";
 import io from "socket.io-client";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { registerListeners } from "./listeners";
-import { joinMatch, requestBoard } from "./emiters";
+import { joinMatch, startMath } from "./emiters";
+import PopUp from "../../Components/PopUp/PopUp";
 
 const socket = io("http://localhost:3000", {
   autoConnect: false
@@ -15,6 +16,7 @@ const socket = io("http://localhost:3000", {
 
 const Match = (props) => {
   const { matchId } = useParams();
+  const [popUp, setPopUp] = useState(null);
   const [board, setBoard] = useState([]);
   const [info, setInfo] = useState({
     playerColor: "W",
@@ -29,15 +31,17 @@ const Match = (props) => {
       socket.connect();
     }
 
-    registerListeners(socket, setBoard, setInfo);
+    registerListeners(socket, setBoard, setInfo, setPopUp);
+
     joinMatch(socket, matchId);
-    requestBoard(socket, matchId);
+    startMath(socket, matchId);
   }, []);
 
   return (
-    <>
+    <div className="match">
       <Topbar />
-      <div className="match">
+      {popUp ? <PopUp type={popUp} /> : null}
+      <div className="match-container">
         <main className="match-main">
           <Board
             board={board}
@@ -46,12 +50,11 @@ const Match = (props) => {
         </main>
 
         <aside className="match-aside">
-          <InfoPanel info={info} />
+          <Panel info={info} />
           <Chat />
         </aside>
       </div>
-    </>
-
+    </div>
   )
 };
 

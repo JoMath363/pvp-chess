@@ -61,13 +61,16 @@ const socketHandler = (io) => {
     });
 
     // Match Events
-    socket.on("request-data", () => {
-      const manager = matchManagers[socket.data.matchId];
-      const color = socket.data.color;
+    socket.on("start-match", () => {
+      const matchId = socket.data.matchId;
+      const manager = matchManagers[matchId];
 
-      const data = manager.getCurrentData(color);
-
-      socket.emit("update-data", data);
+      if (Object.keys(matchPlayers[matchId]).length < 2) {
+        socket.emit("waiting-opponent-join", null);
+      } else {
+        io.to(matchPlayers[matchId]["W"]).emit("update-data", manager.getCurrentData("W"));
+        io.to(matchPlayers[matchId]["B"]).emit("update-data", manager.getCurrentData("B"));
+      }
     });
 
     socket.on("select", (selected) => {

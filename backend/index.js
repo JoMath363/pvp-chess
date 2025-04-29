@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import http from "http";
 import { Server } from "socket.io";
-import socketHandler from "./src/match/socketHandler.js";
+import socketHandler from "./src/socketHandler.js";
 
 dotenv.config();
 const port = process.env.PORT || 3000;

@@ -1,7 +1,11 @@
-export const registerListeners = (socket, setBoard, setInfo) => {
+export const registerListeners = (socket, setBoard, setInfo, setPopUp) => {
   socket.on("match-full", () => {
-    // Warning and then send back to home;
+    setPopUp("full");
   });
+
+  socket.on("waiting-opponent-join", () => {
+    setPopUp("waiting");
+  })
 
   socket.on("match-joined", ({ color }) => {
     console.log("Joined as", color);

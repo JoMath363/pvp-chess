@@ -1,4 +1,8 @@
 .match {
+  position: relative;
+}
+
+.match-container {
   display: flex;
   height: calc(100vh - 3.5rem);
 }

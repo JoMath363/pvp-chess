@@ -1,10 +1,10 @@
-import "./InfoPanel.css";
+import "./Panel.css";
 
 import { FaHandshake, FaFlag } from "react-icons/fa";
 import getPieceIcon from "../Extras/getPieceAssets.js";
 import { useEffect, useRef } from "react";
 
-const InfoPanel = ({ info }) => {
+const Panel = ({ info }) => {
   const historyRef = useRef(null);
 
   useEffect(() => {
@@ -97,4 +97,4 @@ const InfoPanel = ({ info }) => {
   )
 };
 
-export default InfoPanel;
+export default Panel;
