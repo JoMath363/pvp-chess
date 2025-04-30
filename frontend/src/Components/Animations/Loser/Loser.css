@@ -24,7 +24,7 @@
   }
 }
 
-@keyframes shake {
+@keyframes shake-crown {
   0% {
     -webkit-transform: translate(0);
     transform: translate(0);
@@ -88,7 +88,7 @@
   animation: 0.8s drop-right infinite linear;
 }
 
-.crown {
+.loser-crown {
   position: relative;
 
   display: flex;
@@ -98,10 +98,10 @@
   width: 7rem;
   margin-bottom: 2rem;
 
-  animation: shake 1s linear infinite both;
+  animation: shake-crown 1s linear infinite both;
 }
 
-.crown div:nth-child(1) {
+.loser-crown div:nth-child(1) {
   position: absolute;
   top: 0;
   left: 0;
@@ -112,7 +112,7 @@
   border-bottom: 6rem solid var(--accent);
 }
 
-.crown div:nth-child(2) {
+.loser-crown div:nth-child(2) {
 
   width: 0;
   height: 0;
@@ -121,7 +121,7 @@
   border-bottom: 6rem solid var(--accent);
 }
 
-.crown div:nth-child(3) {
+.loser-crown div:nth-child(3) {
   position: absolute;
   top: 0;
   right: 0;

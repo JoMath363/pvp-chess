@@ -10,8 +10,8 @@ export const joinMatch = (socket, matchId) => {
   socket.emit("join-match", matchId);
 }
 
-export const startMath = (socket, matchId) => {
-  socket.emit("start-match", matchId);
+export const startMath = (socket) => {
+  socket.emit("start-match");
 }
 
 

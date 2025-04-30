@@ -6,6 +6,7 @@ class MatchManager {
     this.turn = "B";
     this.selected = null;
     this.history = [];
+    this.finalResult = null;
   }
 
   // Getters

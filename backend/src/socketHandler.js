@@ -23,7 +23,7 @@ const socketHandler = (io) => {
       let color = "W";
       if (matchPlayers[matchId]["W"] && !matchPlayers[matchId]["B"]) {
         color = "B";
-      } 
+      }
 
       socket.join(matchId);
       matchPlayers[matchId][color] = socket.id;
@@ -65,9 +65,15 @@ const socketHandler = (io) => {
       const manager = matchManagers[matchId];
 
       if (!matchId) return;
+      if (manager.finalResult) {
+        const { winner, loser } = manager.finalResult;
+
+        io.to(matchPlayers[matchId][winner]).emit("win");
+        io.to(matchPlayers[matchId][loser]).emit("lose");
+      };
 
       if (Object.keys(matchPlayers[matchId]).length < 2) {
-        socket.emit("waiting-opponent-join", null);
+        socket.emit("waiting-opponent-join");
       } else {
         io.to(matchPlayers[matchId]["W"]).emit("update-data", manager.getCurrentData("W"));
         io.to(matchPlayers[matchId]["B"]).emit("update-data", manager.getCurrentData("B"));
@@ -77,8 +83,8 @@ const socketHandler = (io) => {
     socket.on("select", (selected) => {
       const matchId = socket.data.matchId;
       const manager = matchManagers[matchId];
-      
-      if(!manager.canMove(selected)) return;
+
+      if (!manager.canMove(selected)) return;
 
       manager.selectTargetPiece(selected);
 
@@ -89,20 +95,20 @@ const socketHandler = (io) => {
     socket.on("move", (move) => {
       const matchId = socket.data.matchId;
       const manager = matchManagers[matchId];
-  
+
       manager.moveSelectedPiece(move);
       manager.updateHistory(move);
-      
+
       const turnResult = manager.getTurnResult();
-      console.log(turnResult);
 
       if (turnResult == "mate") {
-        console.log("mate");
         const winner = manager.getTurn();
-        const opponent = manager.getTurn() == "W" ? "B" : "W";
+        const loser = manager.getTurn() == "W" ? "B" : "W";
+
+        manager.finalResult = { winner: winner, loser: loser };
 
         io.to(matchPlayers[matchId][winner]).emit("win");
-        io.to(matchPlayers[matchId][opponent]).emit("lose");
+        io.to(matchPlayers[matchId][loser]).emit("lose");
       } else {
         manager.passPlayerTurn();
 

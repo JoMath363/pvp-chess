@@ -5,7 +5,7 @@ const Loser = (props) => {
     <div className="loser">
       <div className="tear"></div>
       <div className="tear"></div>
-      <div class="crown">
+      <div className="loser-crown">
         <div></div>
         <div></div>
         <div></div>

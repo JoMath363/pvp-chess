@@ -1,6 +1,7 @@
 import Loader from "../Animations/Loader/Loader";
 import Locked from "../Animations/Locked/Locked";
 import Loser from "../Animations/Loser/Loser";
+import Winner from "../Animations/Winner/Winner";
 import "./PopUp.css";
 
 const PopUp = ({ type }) => {
@@ -52,11 +53,11 @@ const Waiting = (props) => {
 const Win = (props) => {
   return (
     <div className="popup-box">
+      <Winner />
 
       <div className="popup-content">
-        <h2>Checkmate! You win!</h2>
+        <h2>You win!</h2>
         <p>Your strategy paid off — well done!</p>
-        <button>Play Again</button>
         <a href="/">Return to Home</a>
       </div>
     </div>
@@ -66,13 +67,12 @@ const Win = (props) => {
 const Lose = (props) => {
   return (
     <div className="popup-box">
-      <Loser/>
+      <Loser />
 
       <div className="popup-content">
-        <h2>Checkmate. You lose.</h2>
-        <p>The king is cornered. Try a new approach next time.</p>
+        <h2>You lose.</h2>
+        <p>Try a new approach next time.</p>
         <a href="/">Return to Home</a>
-        <button>Play Again</button>
       </div>
     </div>
   )

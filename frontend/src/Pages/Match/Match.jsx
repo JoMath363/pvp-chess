@@ -34,13 +34,13 @@ const Match = (props) => {
     registerListeners(socket, setBoard, setInfo, setPopUp);
 
     joinMatch(socket, matchId);
-    startMath(socket, matchId);
+    startMath(socket);
   }, []);
 
   return (
     <div className="match">
       <Topbar />
-      {popUp ? <PopUp type={popUp} /> : null}
+      {popUp ? <PopUp type={popUp}/> : null}
       <div className="match-container">
         <main className="match-main">
           <Board
