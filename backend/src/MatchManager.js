@@ -3,7 +3,7 @@ import ChessBoard from "./ChessBoard.js";
 class MatchManager {
   constructor() {
     this.board = new ChessBoard();
-    this.turn = "W";
+    this.turn = "B";
     this.selected = null;
     this.history = [];
   }
@@ -97,7 +97,6 @@ class MatchManager {
 
   getTurnResult() {
     const opponentColor = this.turn == "W" ? "B" : "W";
-    console.log("oponent color", opponentColor);
     const [row, col] = this.board.findPlayerKing(opponentColor);
 
     if (this.board.verifyCheck(row, col, opponentColor)) {

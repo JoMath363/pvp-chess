@@ -1,6 +1,6 @@
 class ChessBoard {
   constructor() {
-    const board = [
+    /* const board = [
       ["BR", "BN", "BB", "BQ", "BK", "BB", "BN", "BR"],
       ["BP", "BP", "BP", "BP", "BP", "BP", "BP", "BP"],
       ["",    "",   "",   "",   "",   "",   "",   ""],
@@ -9,8 +9,18 @@ class ChessBoard {
       ["",    "",   "",   "",  "",   "",   "",   ""],
       ["WP", "WP", "WP", "WP", "WP", "WP", "WP", "WP"],
       ["WR", "WN", "WB", "WQ", "WK", "WB", "WN", "WR"] 
+    ]; */
+
+    const board = [
+      ["",   "",   "",   "",  "",  "BR", "BK",   ""],
+      ["BP", "WQ",  "BP",  "",  "BQ",  "",  "BP", "BP"],
+      ["",   "",  "WB",  "",  "BP",  "",   "",   ""],
+      ["",   "",   "",   "",  "WP",   "",   "BP",   ""],
+      ["WP",   "",   "BP",   "",  "",  "WP",   "",   ""],
+      ["WN",   "",   "WP",   "",  "",   "WR",   "",   "WK"],
+      ["WP",   "",   "",   "",  "",   "",   "",   ""],
+      ["WR",   "",   "",   "", "", "BN",   "BR",   ""]
     ];
-    
 
     this.board = board.map((row) =>
       row.map((piece) =>

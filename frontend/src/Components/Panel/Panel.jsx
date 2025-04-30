@@ -18,6 +18,7 @@ const Panel = ({ info }) => {
       <div className="info-panel-player">
         <div className="info-panel-player-stats">
           <p>White <span>{info.playerColor == "W" ? "(you)" : "(opponent)"}</span></p>
+          {info.currentTurn == "W" ? <div /> : null}
         </div>
         <div className="info-panel-captured">
           {
@@ -35,6 +36,7 @@ const Panel = ({ info }) => {
       <div className="info-panel-player">
         <div className="info-panel-player-stats">
           <p>Black <span>{info.playerColor == "B" ? "(you)" : "(opponent)"}</span></p>
+          {info.currentTurn == "B" ? <div /> : null}
         </div>
         <div className="info-panel-captured">
           {

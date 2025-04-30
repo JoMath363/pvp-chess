@@ -94,9 +94,15 @@ const socketHandler = (io) => {
       manager.updateHistory(move);
       
       const turnResult = manager.getTurnResult();
+      console.log(turnResult);
 
       if (turnResult == "mate") {
-        io.to(matchId).emit("win", manager.getTurn());
+        console.log("mate");
+        const winner = manager.getTurn();
+        const opponent = manager.getTurn() == "W" ? "B" : "W";
+
+        io.to(matchPlayers[matchId][winner]).emit("win");
+        io.to(matchPlayers[matchId][opponent]).emit("lose");
       } else {
         manager.passPlayerTurn();
 

@@ -16,6 +16,12 @@
 
   border: var(--accent) 1px solid;
   border-radius: 5px;
+}
+
+.info-panel-player-stats {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
   & p {
     color: var(--accent);
@@ -24,6 +30,14 @@
     & span {
       font-weight: 800;
     }
+  }
+
+  & div {
+    width: 0.7rem;
+    height: 0.7rem;
+
+    background: var(--green);
+    border-radius: 100%;
   }
 }
 
