@@ -7,12 +7,8 @@ export const registerListeners = (socket, setBoard, setInfo, setPopUp) => {
     setPopUp("waiting");
   })
 
-  socket.on("match-joined", ({ color }) => {
-    console.log("Joined as", color);
-  });
-
-  socket.on("opponent-joined", ({ color }) => {
-    console.log("Opponent joined as", color);
+  socket.on("opponent-joined", () => {
+    setPopUp(null);
   });
   
   socket.on("update-data", (data) => {

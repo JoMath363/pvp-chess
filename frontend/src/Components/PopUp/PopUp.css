@@ -32,7 +32,6 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 3rem;
 
   padding: 6rem;
 
@@ -42,6 +41,39 @@
 
   & h2 {
     color: var(--accent);
+    margin-bottom: 0.8rem
+  }
+
+  & p {
+    text-align: center;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+  }
+
+  & button, a {
+    all: unset;
+
+    padding: 0.5rem 1rem;
+
+    border: 1px solid var(--accent);
+    border-radius: 5px;
+
+    color: var(--accent);
+    font-size: 1rem;
+    font-weight: 400;
+
+    cursor: pointer;
+
+    &:hover {
+      color: var(--background);
+      background-color: var(--accent);
+    }
+
+    &:active {
+      color: white;
+      border-color: var(--green);
+      background-color: var(--green);
+    }
   }
 }
 
@@ -49,4 +81,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
+  margin-bottom: 3rem
 }

@@ -1,10 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
 :root {
-  --dark-brown: #241a0f;
-  --background:#1c1c24;
-  --surface:#2a2a33;
-  --accent:#f0f0f0;
+  --background: #1c1c24;
+  --surface: #2a2a33;
+  --accent: #f0f0f0;
+  --green: #008000;
+  --red: #ff0000;
   --board-clr1: #eedc97;
   --board-clr2: #964d22;
   --selected: #e7e76b;

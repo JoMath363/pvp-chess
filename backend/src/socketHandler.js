@@ -32,8 +32,7 @@ const socketHandler = (io) => {
         matchManagers[matchId] = new MatchManager();
       }
 
-      socket.emit("match-joined", { matchId, color });
-      socket.to(matchId).emit("opponent-joined", { color: color === "W" ? "W" : "B" });
+      socket.to(matchId).emit("opponent-joined");
 
       console.log(`${socket.id} joined match ${matchId} as ${color}`);
 
@@ -45,7 +44,7 @@ const socketHandler = (io) => {
       const matchId = socket.data.matchId;
       const color = socket.data.color;
 
-      if (!matchId || !matchPlayers[matchId]) return;
+      if (!matchId || !color || !matchPlayers[matchId]) return;
 
       console.log(`Client disconnected: ${socket.id} from match ${matchId}`);
 
@@ -64,6 +63,8 @@ const socketHandler = (io) => {
     socket.on("start-match", () => {
       const matchId = socket.data.matchId;
       const manager = matchManagers[matchId];
+
+      if (!matchId) return;
 
       if (Object.keys(matchPlayers[matchId]).length < 2) {
         socket.emit("waiting-opponent-join", null);

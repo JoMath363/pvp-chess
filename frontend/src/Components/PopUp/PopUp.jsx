@@ -1,4 +1,5 @@
 import Loader from "../Animations/Loader/Loader";
+import Locked from "../Animations/Locked/Locked";
 import "./PopUp.css";
 
 const PopUp = ({ type }) => {
@@ -17,8 +18,11 @@ const PopUp = ({ type }) => {
 const Full = (props) => {
   return (
     <div className="popup-box">
-      <h2>This Match is Already Full</h2>
-      <a href="/">Go Back To Home</a>
+      <Locked />
+
+      <h2>Match Already Full</h2>
+      <p>This match is no longer available. <br /> You can create your own match instead!</p>
+      <a href="/">Return to Home</a>
     </div>
   )
 };
@@ -26,11 +30,14 @@ const Full = (props) => {
 const Waiting = (props) => {
   return (
     <div className="popup-box">
-      <div className="popup-animation">
-        <Loader />
-      </div>
+      <Loader />
 
-      <h2>Waiting for Opponent Player...</h2>
+      <h2>Waiting for Opponent...</h2>
+      <p>Share the match link with a friend to start playing!</p>
+
+      <button onClick={() => navigator.clipboard.writeText(window.location.href)}>
+        Copy Match Link
+      </button>
     </div>
   )
 };

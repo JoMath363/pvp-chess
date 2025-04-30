@@ -1,6 +1,8 @@
 .loader-cube {
   width: 100px;
   height: 100px;
+  margin-bottom: 3rem;
+
   transform-style: preserve-3d;
   transform-origin: 50% 50%;
   animation: rotate 4s infinite linear;
