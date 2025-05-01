@@ -2,14 +2,21 @@ import "./Panel.css";
 
 import { FaHandshake, FaFlag } from "react-icons/fa";
 import getPieceIcon from "../Extras/getPieceAssets.js";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { offerDraw } from "../../Pages/Match/emiters.js";
 
-const Panel = ({ info, setPopUp }) => {
+const Panel = ({ info, setPopUp, socket }) => {
   const historyRef = useRef(null);
+  const drawBtnRef = useRef(null);
 
   useEffect(() => {
     if (historyRef.current) {
       historyRef.current.scrollTop = historyRef.current.scrollHeight;
+    }
+
+    if (drawBtnRef.current && !info.drawAvaiable) {
+      drawBtnRef.current.className = "info-panel-buttons-off";
+      drawBtnRef.current.style.opacity = 0.6;
     }
   }, [info])
 
@@ -52,12 +59,17 @@ const Panel = ({ info, setPopUp }) => {
       </div>
 
       <div className="info-panel-buttons">
-        <button>
+        <button
+          ref={drawBtnRef}
+          className="info-panel-buttons-on"
+          onClick={() => offerDraw(socket)}>
           <FaHandshake className="info-panel-buttons-icon" />
           <span>Offer Draw</span>
         </button>
 
-        <button onClick={() => setPopUp("resign")}>
+        <button
+          className="info-panel-buttons-on"
+          onClick={() => setPopUp("resign")}>
           <FaFlag className="info-panel-buttons-icon" />
           <span>Resign</span>
         </button>

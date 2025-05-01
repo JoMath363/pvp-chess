@@ -1,4 +1,4 @@
-import { resignMatch } from "../../Pages/Match/emiters";
+import { acceptDraw, declineDraw, resignMatch } from "../../Pages/Match/emiters";
 import Flag from "../Animations/Flag/Flag";
 import Loader from "../Animations/Loader/Loader";
 import Locked from "../Animations/Locked/Locked";
@@ -8,10 +8,13 @@ import "./PopUp.css";
 
 const PopUp = ({ type, setPopUp, socket }) => {
   const popUpTypes = {
-    full: <Full />,
-    waiting: <Waiting />,
+    match_full: <MatchFull />,
+    waiting_opponent: <WaitingOpponent />,
     win: <Win />,
     lose: <Lose />,
+    draw: <Draw />,
+    waiting_draw: <WaitingDraw socket={socket}/>,
+    recieve_draw: <RecieveDraw setPopUp={setPopUp} socket={socket}/>,
     resign: <Resign setPopUp={setPopUp} socket={socket} />
   }
 
@@ -22,7 +25,7 @@ const PopUp = ({ type, setPopUp, socket }) => {
   )
 };
 
-const Full = (props) => {
+const MatchFull = (props) => {
   return (
     <div className="popup-box">
       <Locked />
@@ -36,7 +39,7 @@ const Full = (props) => {
   )
 };
 
-const Waiting = (props) => {
+const WaitingOpponent = (props) => {
   return (
     <div className="popup-box">
       <Loader />
@@ -81,15 +84,57 @@ const Lose = (props) => {
   )
 };
 
+const Draw = (props) => {
+  return (
+    <div className="popup-box">
+
+
+      <div className="popup-content">
+        <h2>Draw!</h2>
+        <p>The game has ended in a draw.</p>
+        <a href="/">Return to Home</a>
+      </div>
+    </div>
+  )
+};
+
+const WaitingDraw = (props) => {
+  return (
+    <div className="popup-box">
+
+
+      <div className="popup-content">
+        <h2>Waiting for Opponent...</h2>
+        <p>You’ve offered a draw. Waiting for your <br/> opponent to accept or decline…</p>
+      </div>
+    </div>
+  )
+};
+
+const RecieveDraw = ({ socket }) => {
+  return (
+    <div className="popup-box">
+
+
+      <div className="popup-content">
+        <h2>Draw Offer Received</h2>
+        <p>You’ve offered a draw. Waiting for your <br/> opponent to accept or decline…</p>
+        <button onClick={() => declineDraw(socket)}>Decline</button>
+        <button onClick={() => acceptDraw(socket)}>Accept</button>
+      </div>
+    </div>
+  )
+};
+
 const Resign = ({ setPopUp, socket }) => {
   return (
     <div className="popup-box">
-      <Flag/>
+      <Flag />
 
       <div className="popup-content">
         <h2>Do you Want to Resign?</h2>
 
-        <p>This will end the game and your opponent <br/> will be declared the winner.</p>
+        <p>This will end the game and your opponent <br /> will be declared the winner.</p>
 
         <button onClick={() => setPopUp(null)}>Cancel</button>
         <button onClick={() => resignMatch(socket)}>Yes, Resign</button>

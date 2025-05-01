@@ -18,13 +18,7 @@ const Match = (props) => {
   const { matchId } = useParams();
   const [popUp, setPopUp] = useState(null);
   const [board, setBoard] = useState([]);
-  const [info, setInfo] = useState({
-    playerColor: "W",
-    currentTurn: "W",
-    whiteCaptured: [],
-    blackCaptured: [],
-    moveHistory: []
-  });
+  const [info, setInfo] = useState(null);
 
   useEffect(() => {
     if (!socket.connected) {
@@ -50,8 +44,12 @@ const Match = (props) => {
         </main>
 
         <aside className="match-aside">
-          <Panel info={info} setPopUp={setPopUp} />
-          <Chat />
+          {
+            info ? <>
+              <Panel info={info} socket={socket} setPopUp={setPopUp} />
+              <Chat />
+            </> : null
+          }
         </aside>
       </div>
     </div>

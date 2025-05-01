@@ -3,10 +3,11 @@ import ChessBoard from "./ChessBoard.js";
 class MatchManager {
   constructor() {
     this.board = new ChessBoard();
-    this.turn = "B";
+    this.turn = "W";
     this.selected = null;
     this.history = [];
     this.finalResult = null;
+    this.drawAvaiable = true;
   }
 
   // Getters
@@ -20,7 +21,8 @@ class MatchManager {
       currentTurn: this.turn,
       whiteCaptured: whiteCaptured,
       blackCaptured: blackCaptured,
-      moveHistory: this.history
+      moveHistory: this.history,
+      drawAvaiable: this.drawAvaiable
     };
 
     return { board: board, info: info };

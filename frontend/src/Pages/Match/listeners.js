@@ -4,8 +4,8 @@ export const registerListeners = (socket, setBoard, setInfo, setPopUp) => {
     setInfo(data.info);
   });
 
-  socket.on("waiting-opponent-join", () => {
-    setPopUp("waiting");
+  socket.on("waiting-opponent", () => {
+    setPopUp("waiting_opponent");
   });
 
   socket.on("opponent-joined", () => {
@@ -13,7 +13,7 @@ export const registerListeners = (socket, setBoard, setInfo, setPopUp) => {
   });
 
   socket.on("match-full", () => {
-    setPopUp("full");
+    setPopUp("match_full");
   });
   
   socket.on("win", () => {
@@ -22,5 +22,21 @@ export const registerListeners = (socket, setBoard, setInfo, setPopUp) => {
 
   socket.on("lose", () => {
     setPopUp("lose");
+  });
+
+  socket.on("draw", () => {
+    setPopUp("draw");
+  });
+
+  socket.on("waiting-draw", () => {
+    setPopUp("waiting_draw");
+  });
+
+  socket.on("recieve-draw", () => {
+    setPopUp("recieve_draw");
+  });
+
+  socket.on("decline-draw", () => {
+    setPopUp(null);
   });
 }

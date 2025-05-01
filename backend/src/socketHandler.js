@@ -65,15 +65,20 @@ const socketHandler = (io) => {
       const manager = matchManagers[matchId];
 
       if (!matchId) return;
-      if (manager.finalResult) {
-        const { winner, loser } = manager.finalResult;
 
-        io.to(matchPlayers[matchId][winner]).emit("win");
-        io.to(matchPlayers[matchId][loser]).emit("lose");
+      if (manager.finalResult) {
+        if (manager.finalResult != "draw") {
+          io.to(matchId).emit("draw");
+        } else {
+          const { winner, loser } = manager.finalResult;
+
+          io.to(matchPlayers[matchId][winner]).emit("win");
+          io.to(matchPlayers[matchId][loser]).emit("lose");
+        }
       };
 
       if (Object.keys(matchPlayers[matchId]).length < 2) {
-        socket.emit("waiting-opponent-join");
+        socket.emit("waiting-opponent");
       } else {
         io.to(matchPlayers[matchId]["W"]).emit("update-data", manager.getCurrentData("W"));
         io.to(matchPlayers[matchId]["B"]).emit("update-data", manager.getCurrentData("B"));
@@ -92,6 +97,38 @@ const socketHandler = (io) => {
 
       io.to(matchPlayers[matchId][winner]).emit("win");
       io.to(matchPlayers[matchId][loser]).emit("lose");
+    });
+
+    socket.on("offer-draw", () => {
+      const matchId = socket.data.matchId;
+      const manager = matchManagers[matchId];
+      
+      console.log(manager.drawAvaiable);
+
+      if (manager.drawAvaiable) {
+        const opponent = socket.data.color == "W" ? "B" : "W";
+
+        socket.emit("waiting-draw");
+        socket.to(matchPlayers[matchId][opponent]).emit("recieve-draw");
+      }
+    });
+
+    socket.on("accept-draw", () => {
+      const matchId = socket.data.matchId;
+      const manager = matchManagers[matchId];
+
+      manager.finalResult = "draw";
+
+      io.to(matchId).emit("draw");
+    });
+
+    socket.on("decline-draw", () => {
+      const matchId = socket.data.matchId;
+      const manager = matchManagers[matchId];
+
+      manager.drawAvaiable = false;
+
+      io.to(matchId).emit("decline-draw");
     });
 
     socket.on("select", (selected) => {

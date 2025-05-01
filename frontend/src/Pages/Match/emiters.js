@@ -15,7 +15,19 @@ export const startMath = (socket) => {
 }
 
 export const resignMatch = (socket) => {
-  socket.emit("resign")
+  socket.emit("resign");
+}
+
+export const offerDraw = (socket) => {
+  socket.emit("offer-draw");
+}
+
+export const acceptDraw = (socket) => {
+  socket.emit("accept-draw");
+}
+
+export const declineDraw = (socket) => {
+  socket.emit("decline-draw");
 }
 
 
