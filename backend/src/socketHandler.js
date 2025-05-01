@@ -80,6 +80,20 @@ const socketHandler = (io) => {
       }
     });
 
+    socket.on("resign", () => {
+      const matchId = socket.data.matchId;
+      const color = socket.data.color;
+      const manager = matchManagers[matchId];
+
+      const loser = color;
+      const winner = color == "W" ? "B" : "W";
+
+      manager.finalResult = { winner: winner, loser: loser };
+
+      io.to(matchPlayers[matchId][winner]).emit("win");
+      io.to(matchPlayers[matchId][loser]).emit("lose");
+    });
+
     socket.on("select", (selected) => {
       const matchId = socket.data.matchId;
       const manager = matchManagers[matchId];

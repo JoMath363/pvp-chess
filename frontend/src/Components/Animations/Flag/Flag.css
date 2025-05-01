@@ -1,0 +1,44 @@
+@keyframes wave {
+  0% {
+    transform: translateY(0.1rem);
+  }
+
+  25% {
+    transform: translateY(-0.1rem);
+  }
+
+  50% {
+    transform: translateY(0.1rem);
+  }
+
+  75% {
+    transform: translateY(-0.1rem);
+  }
+
+  100% {
+    transform: translateY(0.1rem);
+  }
+}
+
+.flag {
+  display: flex;
+
+  margin-bottom: 2rem;
+}
+
+.pole {
+  height: 6rem;
+  width: 0.4rem;
+
+  background: var(--accent);
+}
+
+.flag-square {
+  height: 3rem;
+  width: 5rem;
+  margin: 0.4rem -0.2rem 0;
+
+  background: var(--accent);
+  
+  animation: 1s wave infinite linear;
+}

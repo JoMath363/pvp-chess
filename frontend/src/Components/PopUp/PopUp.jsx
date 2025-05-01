@@ -1,15 +1,18 @@
+import { resignMatch } from "../../Pages/Match/emiters";
+import Flag from "../Animations/Flag/Flag";
 import Loader from "../Animations/Loader/Loader";
 import Locked from "../Animations/Locked/Locked";
 import Loser from "../Animations/Loser/Loser";
 import Winner from "../Animations/Winner/Winner";
 import "./PopUp.css";
 
-const PopUp = ({ type }) => {
+const PopUp = ({ type, setPopUp, socket }) => {
   const popUpTypes = {
     full: <Full />,
     waiting: <Waiting />,
     win: <Win />,
-    lose: <Lose />
+    lose: <Lose />,
+    resign: <Resign setPopUp={setPopUp} socket={socket} />
   }
 
   return (
@@ -73,6 +76,23 @@ const Lose = (props) => {
         <h2>You lose.</h2>
         <p>Try a new approach next time.</p>
         <a href="/">Return to Home</a>
+      </div>
+    </div>
+  )
+};
+
+const Resign = ({ setPopUp, socket }) => {
+  return (
+    <div className="popup-box">
+      <Flag/>
+
+      <div className="popup-content">
+        <h2>Do you Want to Resign?</h2>
+
+        <p>This will end the game and your opponent <br/> will be declared the winner.</p>
+
+        <button onClick={() => setPopUp(null)}>Cancel</button>
+        <button onClick={() => resignMatch(socket)}>Yes, Resign</button>
       </div>
     </div>
   )

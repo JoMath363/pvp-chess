@@ -40,7 +40,7 @@ const Match = (props) => {
   return (
     <div className="match">
       <Topbar />
-      {popUp ? <PopUp type={popUp}/> : null}
+      {popUp ? <PopUp type={popUp} socket={socket} setPopUp={setPopUp} /> : null}
       <div className="match-container">
         <main className="match-main">
           <Board
@@ -50,7 +50,7 @@ const Match = (props) => {
         </main>
 
         <aside className="match-aside">
-          <Panel info={info} />
+          <Panel info={info} setPopUp={setPopUp} />
           <Chat />
         </aside>
       </div>

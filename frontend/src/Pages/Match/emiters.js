@@ -14,6 +14,9 @@ export const startMath = (socket) => {
   socket.emit("start-match");
 }
 
+export const resignMatch = (socket) => {
+  socket.emit("resign")
+}
 
 
     

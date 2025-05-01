@@ -4,7 +4,7 @@ import { FaHandshake, FaFlag } from "react-icons/fa";
 import getPieceIcon from "../Extras/getPieceAssets.js";
 import { useEffect, useRef } from "react";
 
-const Panel = ({ info }) => {
+const Panel = ({ info, setPopUp }) => {
   const historyRef = useRef(null);
 
   useEffect(() => {
@@ -57,7 +57,7 @@ const Panel = ({ info }) => {
           <span>Offer Draw</span>
         </button>
 
-        <button>
+        <button onClick={() => setPopUp("resign")}>
           <FaFlag className="info-panel-buttons-icon" />
           <span>Resign</span>
         </button>
