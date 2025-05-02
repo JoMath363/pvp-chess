@@ -14,7 +14,7 @@ const Panel = ({ info, setPopUp, socket }) => {
       historyRef.current.scrollTop = historyRef.current.scrollHeight;
     }
 
-    if (drawBtnRef.current && !info.drawAvaiable) {
+    if (drawBtnRef.current && !info.drawAvailable) {
       drawBtnRef.current.className = "info-panel-buttons-off";
       drawBtnRef.current.style.opacity = 0.6;
     }

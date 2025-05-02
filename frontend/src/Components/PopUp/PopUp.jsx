@@ -33,7 +33,7 @@ const MatchFull = (props) => {
       <div className="popup-content">
         <h2>Match Already Full</h2>
         <p>This match is no longer available. <br /> You can create your own match instead!</p>
-        <a href="/">Return to Home</a>
+        <a className="default" href="/">Return to Home</a>
       </div>
     </div>
   )
@@ -48,7 +48,7 @@ const WaitingOpponent = (props) => {
         <h2>Waiting for Opponent...</h2>
         <p>Share the match link with a friend to start playing!</p>
 
-        <button onClick={() => navigator.clipboard.writeText(window.location.href)}>
+        <button className="default"  onClick={() => navigator.clipboard.writeText(window.location.href)}>
           Copy Match Link
         </button>
       </div>
@@ -64,7 +64,7 @@ const Win = (props) => {
       <div className="popup-content">
         <h2>You win!</h2>
         <p>Your strategy paid off — well done!</p>
-        <a href="/">Return to Home</a>
+        <a className="default"  href="/">Return to Home</a>
       </div>
     </div>
   )
@@ -78,7 +78,7 @@ const Lose = (props) => {
       <div className="popup-content">
         <h2>You lose.</h2>
         <p>Try a new approach next time.</p>
-        <a href="/">Return to Home</a>
+        <a className="default" href="/">Return to Home</a>
       </div>
     </div>
   )
@@ -92,7 +92,7 @@ const Draw = (props) => {
       <div className="popup-content">
         <h2>Draw!</h2>
         <p>The game has ended in a draw.</p>
-        <a href="/">Return to Home</a>
+        <a className="default" href="/">Return to Home</a>
       </div>
     </div>
   )
@@ -118,9 +118,9 @@ const RecieveDraw = ({ socket }) => {
 
       <div className="popup-content">
         <h2>Draw Offer Received</h2>
-        <p>You’ve offered a draw. Waiting for your <br/> opponent to accept or decline…</p>
-        <button onClick={() => declineDraw(socket)}>Decline</button>
-        <button onClick={() => acceptDraw(socket)}>Accept</button>
+        <p>Your opponent has offered a draw. <br/> Do you accept?</p>
+        <button className="negative" onClick={() => declineDraw(socket)}>Decline</button>
+        <button className="positive" onClick={() => acceptDraw(socket)}>Accept</button>
       </div>
     </div>
   )
@@ -136,8 +136,8 @@ const Resign = ({ setPopUp, socket }) => {
 
         <p>This will end the game and your opponent <br /> will be declared the winner.</p>
 
-        <button onClick={() => setPopUp(null)}>Cancel</button>
-        <button onClick={() => resignMatch(socket)}>Yes, Resign</button>
+        <button className="negative" onClick={() => setPopUp(null)}>Cancel</button>
+        <button className="positive" onClick={() => resignMatch(socket)}>Yes, Resign</button>
       </div>
     </div>
   )

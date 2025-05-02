@@ -67,7 +67,7 @@ const socketHandler = (io) => {
       if (!matchId) return;
 
       if (manager.finalResult) {
-        if (manager.finalResult != "draw") {
+        if (manager.finalResult == "draw") {
           io.to(matchId).emit("draw");
         } else {
           const { winner, loser } = manager.finalResult;
@@ -102,10 +102,8 @@ const socketHandler = (io) => {
     socket.on("offer-draw", () => {
       const matchId = socket.data.matchId;
       const manager = matchManagers[matchId];
-      
-      console.log(manager.drawAvaiable);
 
-      if (manager.drawAvaiable) {
+      if (manager.drawAvailable) {
         const opponent = socket.data.color == "W" ? "B" : "W";
 
         socket.emit("waiting-draw");
@@ -126,9 +124,12 @@ const socketHandler = (io) => {
       const matchId = socket.data.matchId;
       const manager = matchManagers[matchId];
 
-      manager.drawAvaiable = false;
+      manager.drawAvailable = false;
 
       io.to(matchId).emit("decline-draw");
+      
+      io.to(matchPlayers[matchId]["W"]).emit("update-data", manager.getCurrentData("W"));
+      io.to(matchPlayers[matchId]["B"]).emit("update-data", manager.getCurrentData("B"));
     });
 
     socket.on("select", (selected) => {

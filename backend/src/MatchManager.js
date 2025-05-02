@@ -7,7 +7,7 @@ class MatchManager {
     this.selected = null;
     this.history = [];
     this.finalResult = null;
-    this.drawAvaiable = true;
+    this.drawAvailable = true;
   }
 
   // Getters
@@ -22,7 +22,7 @@ class MatchManager {
       whiteCaptured: whiteCaptured,
       blackCaptured: blackCaptured,
       moveHistory: this.history,
-      drawAvaiable: this.drawAvaiable
+      drawAvailable: this.drawAvailable
     };
 
     return { board: board, info: info };

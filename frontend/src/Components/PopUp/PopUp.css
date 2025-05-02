@@ -75,16 +75,32 @@
 
     cursor: pointer;
 
-    &:hover {
-      color: var(--background);
-      background-color: var(--accent);
-    }
-
     &:active {
-      color: white;
-      border-color: var(--green);
-      background-color: var(--green);
+      color: var(--accent);
+      background-color: var(--surface);
+      font-weight: 500;
     }
+  }
+}
+
+.negative {
+  &:hover {
+    color: var(--red);
+    border-color: var(--red);
+  }
+}
+
+.positive {
+  &:hover {
+    color: var(--green);
+    border-color: var(--green);
+  }
+}
+
+.default {
+  &:hover {
+    color: var(--background);
+    background-color: var(--accent);
   }
 }
 
