@@ -3,17 +3,21 @@ import "./Loader.css"
 
 const Loader = () => {
   return (
-    <div>
-      <div className="overlay" id="overlay" />
-      <div className="loader">
-        <div className="loader-cube">
-          <div className="face" />
-          <div className="face" />
-          <div className="face" />
-          <div className="face" />
-          <div className="face" />
-          <div className="face" />
-        </div>
+    <div className="loader">
+      <div className="loader-row">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <div className="loader-row">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <div className="loader-row">
+        <span></span>
+        <span></span>
+        <span></span>
       </div>
     </div>
   );

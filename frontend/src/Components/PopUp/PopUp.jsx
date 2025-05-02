@@ -101,7 +101,7 @@ const Draw = (props) => {
 const WaitingDraw = (props) => {
   return (
     <div className="popup-box">
-
+      <Loader/>
 
       <div className="popup-content">
         <h2>Waiting for Opponent...</h2>
