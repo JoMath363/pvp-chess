@@ -1,8 +1,10 @@
 import { acceptDraw, declineDraw, resignMatch } from "../../Pages/Match/emiters";
+import InDraw from "../Animations/Draw/InDraw";
 import Flag from "../Animations/Flag/Flag";
 import Loader from "../Animations/Loader/Loader";
 import Locked from "../Animations/Locked/Locked";
 import Loser from "../Animations/Loser/Loser";
+import Offer from "../Animations/Offer/Offer";
 import Winner from "../Animations/Winner/Winner";
 import "./PopUp.css";
 
@@ -87,7 +89,7 @@ const Lose = (props) => {
 const Draw = (props) => {
   return (
     <div className="popup-box">
-
+      <InDraw/>
 
       <div className="popup-content">
         <h2>Draw!</h2>
@@ -114,7 +116,7 @@ const WaitingDraw = (props) => {
 const RecieveDraw = ({ socket }) => {
   return (
     <div className="popup-box">
-
+      <Offer/>
 
       <div className="popup-content">
         <h2>Draw Offer Received</h2>

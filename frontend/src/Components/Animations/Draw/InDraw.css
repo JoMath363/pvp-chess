@@ -1,0 +1,46 @@
+.draw {
+  display: flex;
+  gap: 2rem;
+}
+
+.draw-crown {
+  position: relative;
+
+  display: flex;
+  justify-content: center;
+
+  height: 6rem;
+  width: 7rem;
+  margin-bottom: 2rem;
+}
+
+.draw-crown div:nth-child(1) {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 0;
+  height: 0;
+  border-right: 4rem solid transparent;
+  border-bottom: 6rem solid var(--accent);
+}
+
+.draw-crown div:nth-child(2) {
+
+  width: 0;
+  height: 0;
+  border-left: 3rem solid transparent;
+  border-right: 3rem solid transparent;
+  border-bottom: 6rem solid var(--accent);
+}
+
+.draw-crown div:nth-child(3) {
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  width: 0;
+  height: 0;
+  border-left: 4rem solid transparent;
+  border-bottom: 6rem solid var(--accent);
+}
