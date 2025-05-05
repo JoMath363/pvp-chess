@@ -1,4 +1,4 @@
-.topbar {
+.header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -10,19 +10,21 @@
   color: var(--accent);
 }
 
-.topbar-logo {
+.header-logo {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.7rem;
 
+  color: var(--accent);
+
   & span {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     font-weight: 450;
   }
 }
 
-.topbar-logo-icon {
+.header-logo-icon {
   height: 1.5rem;
   width: 1.5rem;
   color: var(--accent);

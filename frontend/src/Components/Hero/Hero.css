@@ -1,0 +1,43 @@
+.hero {
+  padding: 5rem 15%;
+}
+
+.hero-cta {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  text-align: center;
+
+  & h1 {
+    margin-bottom: 1rem;
+
+    font-size: 3rem;
+    color: var(--accent);
+  }
+
+  & p {
+    margin-bottom: 2rem;
+
+    color: var(--accent);
+  }
+
+  & button {
+    all: unset;
+
+    padding: 0.6rem 2rem;
+
+    border: 1px solid var(--accent);
+    border-radius: 10px;
+
+    color: var(--accent);
+
+    &:hover {
+      background-color: var(--accent);
+      color: var(--background);
+      cursor: pointer;
+      font-weight: 450;
+    }
+  }
+}

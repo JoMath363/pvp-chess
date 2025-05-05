@@ -1,23 +1,16 @@
 import "./Home.css"
-import Topbar from "../../Components/Topbar/Topbar.jsx";
+import Header from "../../Components/Header/Header.jsx";
+import Hero from "../../Components/Hero/Hero.jsx";
+import About from "../../Components/About/About.jsx";
 
 const Home = (props) => {
-
-  const createMatch = () => {
-
-  }
-
-  const enterMatch = () => {
-
-  }
-
   return (
     <>
-      <Topbar />
+      <Header />
       <div className="home">
-        <main className="home-main">
-          
-        </main>
+        <Hero/>
+        {/* <About/> */}
+        <div className="home-divider"></div>
       </div>
     </>
   )
