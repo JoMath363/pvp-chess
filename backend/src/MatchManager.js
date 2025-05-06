@@ -102,7 +102,7 @@ class MatchManager {
     const opponentColor = this.turn == "W" ? "B" : "W";
     const [row, col] = this.board.findPlayerKing(opponentColor);
 
-    if (this.board.verifyCheck(row, col, opponentColor)) {
+    if (this.board.verifyCheck(row, col, opponentColor, this.board.get())) {
       if (this.board.verifyCheckmate(row, col, opponentColor)) {
         return "mate";
       }
