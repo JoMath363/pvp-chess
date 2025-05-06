@@ -112,10 +112,6 @@ class MatchManager {
     return "ongoing";
   }
 
-  getTurn() {
-    return this.turn;
-  }
-
   getConvertedPosition(position) {
     if (this.turn == "B") {
       return [7 - position[0], position[1]];

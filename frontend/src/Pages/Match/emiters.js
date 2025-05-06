@@ -30,5 +30,9 @@ export const declineDraw = (socket) => {
   socket.emit("decline-draw");
 }
 
+export const sendMessage = (socket, content) => {
+  socket.emit("send-message", content);
+}
+
 
     

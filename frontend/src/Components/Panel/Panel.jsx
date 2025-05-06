@@ -1,13 +1,15 @@
 import "./Panel.css";
 
 import { FaHandshake, FaFlag } from "react-icons/fa";
-import getPieceIcon from "../Extras/getPieceAssets.js";
 import { useEffect, useRef, useState } from "react";
-import { offerDraw } from "../../Pages/Match/emiters.js";
+import { FaPaperPlane } from "react-icons/fa";
+import { offerDraw, sendMessage } from "../../Pages/Match/emiters.js";
+import getPieceIcon from "../Extras/getPieceAssets.js";
 
-const Panel = ({ info, setPopUp, socket }) => {
+const Panel = ({ info, messages, setPopUp, socket }) => {
   const historyRef = useRef(null);
   const drawBtnRef = useRef(null);
+  const [chatInput, setChatInput] = useState(null);
 
   useEffect(() => {
     if (historyRef.current) {
@@ -15,23 +17,23 @@ const Panel = ({ info, setPopUp, socket }) => {
     }
 
     if (drawBtnRef.current && !info.drawAvailable) {
-      drawBtnRef.current.className = "info-panel-buttons-off";
+      drawBtnRef.current.className = "panel-buttons-off";
       drawBtnRef.current.style.opacity = 0.6;
     }
   }, [info])
 
   return (
-    <div className="info-panel">
-      <div className="info-panel-player">
-        <div className="info-panel-player-stats">
+    <div className="panel">
+      <div className="panel-player">
+        <div className="panel-player-stats">
           <p>White <span>{info.playerColor == "W" ? "(you)" : "(opponent)"}</span></p>
           {info.currentTurn == "W" ? <div /> : null}
         </div>
-        <div className="info-panel-captured">
+        <div className="panel-captured">
           {
             info.whiteCaptured.map((piece, i) => {
               return piece[1] > 0 ? (
-                <div className="info-panel-captured-piece" key={i} >
+                <div className="panel-captured-piece" key={i} >
                   <img src={getPieceIcon("B", piece[0])} />
                   <span>x{piece[1]}</span>
                 </div>) : null;
@@ -40,16 +42,16 @@ const Panel = ({ info, setPopUp, socket }) => {
         </div>
       </div>
 
-      <div className="info-panel-player">
-        <div className="info-panel-player-stats">
+      <div className="panel-player">
+        <div className="panel-player-stats">
           <p>Black <span>{info.playerColor == "B" ? "(you)" : "(opponent)"}</span></p>
           {info.currentTurn == "B" ? <div /> : null}
         </div>
-        <div className="info-panel-captured">
+        <div className="panel-captured">
           {
             info.blackCaptured.map((piece, i) => {
               return piece[1] > 0 ? (
-                <div className="info-panel-captured-piece" key={i} >
+                <div className="panel-captured-piece" key={i} >
                   <img src={getPieceIcon("W", piece[0])} />
                   <span>x{piece[1]}</span>
                 </div>) : null;
@@ -58,26 +60,26 @@ const Panel = ({ info, setPopUp, socket }) => {
         </div>
       </div>
 
-      <div className="info-panel-buttons">
+      <div className="panel-buttons">
         <button
           ref={drawBtnRef}
-          className="info-panel-buttons-on"
+          className="panel-buttons-on"
           onClick={() => offerDraw(socket)}>
-          <FaHandshake className="info-panel-buttons-icon" />
+          <FaHandshake className="panel-buttons-icon" />
           <span>Offer Draw</span>
         </button>
 
         <button
-          className="info-panel-buttons-on"
+          className="panel-buttons-on"
           onClick={() => setPopUp("resign")}>
-          <FaFlag className="info-panel-buttons-icon" />
+          <FaFlag className="panel-buttons-icon" />
           <span>Resign</span>
         </button>
       </div>
 
-      <div className="info-panel-history">
+      <div className="panel-history">
         <p>Move History</p>
-        <div className="history" ref={historyRef}>
+        <div className="panel-history-grid" ref={historyRef}>
           {info.moveHistory.map((round, i) => {
             const [whiteMove, blackMove] = round;
 
@@ -88,16 +90,16 @@ const Panel = ({ info, setPopUp, socket }) => {
             const blackPos = blackMove ? blackMove[2] : "";
 
             return (
-              <div key={i} className="history-round">
-                <span className="history-number">{i + 1}.</span>
+              <div key={i} className="panel-history-round">
+                <span className="panel-history-number">{i + 1}.</span>
                 {
-                  whiteMove ? <span className="history-move">
+                  whiteMove ? <span className="panel-history-move">
                     <img src={whiteIcon} />
                     <span>{whitePos}</span>
                   </span> : null
                 }
                 {
-                  blackMove ? <span className="history-move">
+                  blackMove ? <span className="panel-history-move">
                     <img src={blackIcon} />
                     <span>{blackPos}</span>
                   </span> : null
@@ -105,6 +107,23 @@ const Panel = ({ info, setPopUp, socket }) => {
               </div>
             );
           })}
+        </div>
+      </div>
+
+      <div className="panel-chat">
+        <div className="panel-chat-messages" >
+          {messages.map((message, i) => 
+            <p key={i}>
+              <span>{message.color}: </span>
+              {message.content}
+            </p>
+          )}
+        </div>
+        <div className="panel-chat-form">
+          <input type="text" onChange={(e) => setChatInput(e.target.value)}/>
+          <button onClick={() => sendMessage(socket, chatInput)}>
+            <FaPaperPlane className="panel-chat-submit"/>
+          </button>
         </div>
       </div>
     </div>

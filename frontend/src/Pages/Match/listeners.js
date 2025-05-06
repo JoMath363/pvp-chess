@@ -1,4 +1,4 @@
-export const registerListeners = (socket, setBoard, setInfo, setPopUp) => {
+export const registerListeners = (socket, setBoard, setInfo, setMessages, setPopUp) => {
   socket.on("update-data", (data) => {
     setBoard(data.board);
     setInfo(data.info);
@@ -39,4 +39,8 @@ export const registerListeners = (socket, setBoard, setInfo, setPopUp) => {
   socket.on("decline-draw", () => {
     setPopUp(null);
   });
+
+  socket.on("new-message", (messages) => {
+    setMessages(messages);
+  })
 }
