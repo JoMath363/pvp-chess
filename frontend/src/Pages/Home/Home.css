@@ -17,3 +17,30 @@
 	height: 1px;
 	background-image: linear-gradient(to right, transparent, var(--accent), transparent);
 }
+
+.home-footer {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 2rem;
+
+	height: 2rem;
+	background: var(--surface);
+
+	& span {
+		color: var(--accent);
+	}
+
+	& a {
+		display: flex;
+		align-items: center;
+		gap: 0.3rem;
+
+		text-decoration: none;
+		color: var(--accent);
+
+		&:hover {
+			color: var(--green);
+		}
+	}
+}
