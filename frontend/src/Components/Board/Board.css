@@ -1,7 +1,47 @@
 .board {
-  display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  grid-template-rows: repeat(8, 1fr);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
-  width: 750px;
+  max-width: 750px;
+  max-height: auto;
+}
+
+.board-bottom {
+  display: grid;
+  grid-template-columns: auto repeat(8, 1fr);
+
+  width: 100%;
+}
+
+.board-content {
+  display: grid;
+  grid-template-columns: auto repeat(8, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+}
+
+.corner  {
+  height: 2rem;
+  width: 2rem;
+}
+
+.rank-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 450;
+  color: var(--accent);
+  width: 2rem;
+  font-size: 0.9rem;
+}
+
+.file-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 450;
+  color: var(--accent);
+  font-size: 0.9rem;
+  height: 2rem;
 }

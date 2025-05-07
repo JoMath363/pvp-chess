@@ -2,7 +2,7 @@ import "./About.css";
 
 const About = (props) => {
   return (
-    <div className="home-about">
+    <div className="about">
       <h2>About</h2>
       <p>
         This project is a simple, two-player chess platform built for playing with friends online.

@@ -147,7 +147,7 @@ class MatchManager {
 
     const letters = ["a", "b", "c", "d", "e", "f", "g", "h"];
 
-    const moveInfo = [color, type, `${letters[row]}${col + 1}`];
+    const moveInfo = [color, type, `${8 - row}${letters[col]}`];
 
     const last = this.history.at(-1);
     if (last && last.length < 2) {

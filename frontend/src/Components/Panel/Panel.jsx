@@ -7,20 +7,26 @@ import { offerDraw, sendMessage } from "../../Pages/Match/emiters.js";
 import getPieceIcon from "../Extras/getPieceAssets.js";
 
 const Panel = ({ info, messages, setPopUp, socket }) => {
+  const [chatInput, setChatInput] = useState("");
+
   const historyRef = useRef(null);
   const drawBtnRef = useRef(null);
-  const [chatInput, setChatInput] = useState(null);
+  const chatRef = useRef(null);
 
   useEffect(() => {
     if (historyRef.current) {
       historyRef.current.scrollTop = historyRef.current.scrollHeight;
     }
 
+    if (chatRef.current) {
+      chatRef.current.scrollTop = chatRef.current.scrollHeight;
+    }
+
     if (drawBtnRef.current && !info.drawAvailable) {
       drawBtnRef.current.className = "panel-buttons-off";
       drawBtnRef.current.style.opacity = 0.6;
     }
-  }, [info])
+  }, [info, messages])
 
   return (
     <div className="panel">
@@ -111,20 +117,31 @@ const Panel = ({ info, messages, setPopUp, socket }) => {
       </div>
 
       <div className="panel-chat">
-        <div className="panel-chat-messages" >
-          {messages.map((message, i) => 
+        <div className="panel-chat-messages" ref={chatRef}>
+          {messages.map((message, i) =>
             <p key={i}>
               <span>{message.color}: </span>
               {message.content}
             </p>
           )}
         </div>
-        <div className="panel-chat-form">
-          <input type="text" onChange={(e) => setChatInput(e.target.value)}/>
-          <button onClick={() => sendMessage(socket, chatInput)}>
-            <FaPaperPlane className="panel-chat-submit"/>
+        <form
+          className="panel-chat-form"
+          onSubmit={(e) => {
+            e.preventDefault();
+            if (chatInput.trim()) {
+              sendMessage(socket, chatInput);
+              setChatInput("");
+            }
+          }}>
+          <input
+            type="text"
+            value={chatInput}
+            onChange={(e) => setChatInput(e.target.value)} />
+          <button type="submit">
+            <FaPaperPlane className="panel-chat-submit" />
           </button>
-        </div>
+        </form>
       </div>
     </div>
   )

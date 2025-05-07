@@ -2,6 +2,7 @@ import "./Home.css"
 import Header from "../../Components/Header/Header.jsx";
 import Hero from "../../Components/Hero/Hero.jsx";
 import About from "../../Components/About/About.jsx";
+import Tutorial from "../../Components/Tutorial/Tutorial.jsx";
 
 const Home = (props) => {
   return (
@@ -9,8 +10,8 @@ const Home = (props) => {
       <Header />
       <div className="home">
         <Hero/>
-        {/* <About/> */}
-        <div className="home-divider"></div>
+        <div className="home-divider"/>
+        <About/>
       </div>
     </>
   )

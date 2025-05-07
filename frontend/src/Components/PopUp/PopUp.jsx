@@ -65,7 +65,7 @@ const Win = (props) => {
 
       <div className="popup-content">
         <h2>You win!</h2>
-        <p>Your strategy paid off — well done!</p>
+        <p>Well done! Your strategy paid off.</p>
         <a className="default"  href="/">Return to Home</a>
       </div>
     </div>
