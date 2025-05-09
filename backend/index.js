@@ -16,7 +16,7 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: "https://pvp-chess.vercel.app/",
+    origin: "https://pvp-chess.vercel.app",
     methods: ["GET", "POST"]
   }
 });
@@ -26,6 +26,6 @@ export default io;
 socketHandler(io);
 
 server.listen(port, () => {
-  console.log(`server listening on: http://localhost:${port}/`);
+  console.log(`server listening on port ${port}`);
 });
 
