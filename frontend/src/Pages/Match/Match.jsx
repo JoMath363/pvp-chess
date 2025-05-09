@@ -1,5 +1,4 @@
 import "./Match.css";
-import Header from "../../Components/Header/Header.jsx";
 import Board from "../../Components/Board/Board.jsx";
 import Panel from "../../Components/Panel/Panel.jsx";
 import PopUp from "../../Components/PopUp/PopUp";
@@ -10,7 +9,7 @@ import { registerListeners } from "./listeners";
 import { joinMatch, startMath } from "./emiters";
 import { FaBars, FaChessQueen } from "react-icons/fa";
 
-const socket = io("http://localhost:3000", {
+const socket = io("https://pvp-chess.onrender.com", {
   autoConnect: false
 });
 
@@ -18,7 +17,7 @@ const Match = (props) => {
   const { matchId } = useParams();
   const [popUp, setPopUp] = useState(null);
   const [info, setInfo] = useState(null);
-  const [board, setBoard] = useState([]);
+  const [board, setBoard] = useState(null);
   const [messages, setMessages] = useState([]);
 
   const [showPanel, setShowPanel] = useState(true);
@@ -36,6 +35,8 @@ const Match = (props) => {
 
   return (
     <>
+      {popUp ? <PopUp type={popUp} socket={socket} setPopUp={setPopUp} /> : null}
+
       <div className="header">
         <div className="header-logo">
           <FaChessQueen className="header-logo-icon" />
@@ -47,10 +48,10 @@ const Match = (props) => {
           <FaBars />
         </button>
       </div>
-      {popUp ? <PopUp type={popUp} socket={socket} setPopUp={setPopUp} /> : null}
+
       <div className="match">
         <main className="match-main">
-          <Board board={board} socket={socket} />
+          {board ? <Board board={board} socket={socket} /> : null}
         </main>
 
         <aside className={`match-aside ${showPanel ? "" : "invisible"}`}>

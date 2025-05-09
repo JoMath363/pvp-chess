@@ -107,7 +107,7 @@
   flex-direction: column;
   justify-content: space-between;
 
-  min-height: 246px;
+  height: 246px;
   padding: 0.8rem;
 
   border: var(--accent) 1px solid;

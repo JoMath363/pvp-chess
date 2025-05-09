@@ -6,7 +6,7 @@ import { Server } from "socket.io";
 import socketHandler from "./src/socketHandler.js";
 
 dotenv.config();
-const port = process.env.PORT || 3000;
+const port = 3000;
 
 const app = express();
 app.use(express.json());

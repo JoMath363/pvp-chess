@@ -75,19 +75,19 @@ class MatchManager {
     const blackPieces = { Q: 0, R: 0, B: 0, N: 0, P: 0 };
     const captureds = { whiteCaptured: [], blackCaptured: [] };
 
-    for (const row of this.board.get()){
+    for (const row of this.board.get()) {
       for (const piece of row) {
         if (piece && piece.type != "K") {
           if (piece.color == "W") {
-            whitePieces[piece.type] ++;
+            whitePieces[piece.type]++;
           } else {
-            blackPieces[piece.type] ++;
+            blackPieces[piece.type]++;
           }
         }
       }
     }
 
-    for (const type of Object.keys(defaultPieces)){
+    for (const type of Object.keys(defaultPieces)) {
       const whiteMissing = defaultPieces[type] - whitePieces[type];
       const blackMissing = defaultPieces[type] - blackPieces[type];
 
@@ -145,9 +145,9 @@ class MatchManager {
     const [row, col] = this.getConvertedPosition(move);
     const { color, type } = this.board.get()[row][col];
 
-    const letters = ["a", "b", "c", "d", "e", "f", "g", "h"];
+    const notation = `${String.fromCharCode(97 + col)}${8 - row}`;
 
-    const moveInfo = [color, type, `${8 - row}${letters[col]}`];
+    const moveInfo = [color, type, notation];
 
     const last = this.history.at(-1);
     if (last && last.length < 2) {

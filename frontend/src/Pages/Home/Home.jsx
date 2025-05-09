@@ -1,15 +1,21 @@
 import "./Home.css"
-import Header from "../../Components/Header/Header.jsx";
 import Hero from "../../Components/Hero/Hero.jsx";
 import About from "../../Components/About/About.jsx";
 import Tutorial from "../../Components/Tutorial/Tutorial.jsx";
+import { FaChessQueen } from "react-icons/fa";
 
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 
 const Home = (props) => {
   return (
     <>
-      <Header />
+      <div className="header">
+        <div className="header-logo">
+          <FaChessQueen className="header-logo-icon" />
+          <span>PVP Chess</span>
+        </div>
+      </div>
+
       <div className="home">
         <Hero />
         <div className="home-divider" />
