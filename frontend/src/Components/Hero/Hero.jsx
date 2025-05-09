@@ -1,10 +1,13 @@
+import { useNavigate } from "react-router-dom";
 import "./Hero.css";
 
 const Hero = (props) => {
+  const navigate = useNavigate();
+
   const createMatch = () => {
     const matchId = Math.random().toString(16).slice(2);
 
-    window.location.replace(`https://pvp-chess.vercel.app/match/${matchId}`);
+    navigate(`/match/${matchId}`);
   }
 
   return (
