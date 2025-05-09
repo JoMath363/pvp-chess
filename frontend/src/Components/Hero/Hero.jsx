@@ -4,7 +4,7 @@ const Hero = (props) => {
   const createMatch = () => {
     const matchId = Math.random().toString(16).slice(2);
 
-    window.location.replace(`http://localhost:5173/match/${matchId}`)
+    window.location.replace(`https://pvp-chess.vercel.app/match/${matchId}`);
   }
 
   return (
