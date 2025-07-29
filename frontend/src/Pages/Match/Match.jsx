@@ -9,13 +9,13 @@ import { registerListeners } from "./listeners";
 import { joinMatch, startMath } from "./emiters";
 import { FaBars, FaChessQueen } from "react-icons/fa";
 
-const socket = io("https://pvp-chess.onrender.com", {
+const socket = io("https://pvp-chess.vercel.app", {
   autoConnect: false
 });
 
 const Match = (props) => {
   const { matchId } = useParams();
-  const [popUp, setPopUp] = useState(null);
+  const [popUp, setPopUp] = useState("waiting_connection");
   const [info, setInfo] = useState(null);
   const [board, setBoard] = useState(null);
   const [messages, setMessages] = useState([]);
@@ -30,7 +30,7 @@ const Match = (props) => {
     registerListeners(socket, setBoard, setInfo, setMessages, setPopUp);
 
     joinMatch(socket, matchId);
-    startMath(socket);
+    startMath(socket, setPopUp);
   }, []);
 
   return (

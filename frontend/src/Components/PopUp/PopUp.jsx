@@ -12,6 +12,7 @@ const PopUp = ({ type, setPopUp, socket }) => {
   const popUpTypes = {
     match_full: <MatchFull />,
     waiting_opponent: <WaitingOpponent />,
+    waiting_connection: <WaitingConnection />,
     win: <Win />,
     lose: <Lose />,
     draw: <Draw />,
@@ -36,6 +37,19 @@ const MatchFull = (props) => {
         <h2>Match Already Full</h2>
         <p>This match is no longer available. <br /> You can create your own match instead!</p>
         <a className="default" href="/">Return to Home</a>
+      </div>
+    </div>
+  )
+};
+
+const WaitingConnection = (props) => {
+  return (
+    <div className="popup-box">
+      <Loader />
+
+      <div className="popup-content">
+        <h2>Connecting to Server</h2>
+        <p>This can take a minute...</p>
       </div>
     </div>
   )

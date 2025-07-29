@@ -3,7 +3,7 @@ import "./Winner.css";
 const Winner = (props) => {
   return (
     <div className="winner">
-      <div class="winner-crown">
+      <div className="winner-crown">
         <div></div>
         <div></div>
         <div></div>

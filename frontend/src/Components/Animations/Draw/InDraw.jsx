@@ -3,12 +3,12 @@ import "./InDraw.css";
 const InDraw = (props) => {
   return (
     <div className="draw">
-      <div class="draw-crown">
+      <div className="draw-crown">
         <div></div>
         <div></div>
         <div></div>
       </div>
-      <div class="draw-crown">
+      <div className="draw-crown">
         <div></div>
         <div></div>
         <div></div>
