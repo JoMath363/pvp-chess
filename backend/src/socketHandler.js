@@ -29,7 +29,7 @@ const socketHandler = (io) => {
       players[color] = socket.id;
       
       socket.join(matchId);
-      socket.to(matchId).emit("opponent-joined");
+      socket.emit("opponent-joined");
 
       console.log(`${socket.id} joined match ${matchId} as ${color}`);
 

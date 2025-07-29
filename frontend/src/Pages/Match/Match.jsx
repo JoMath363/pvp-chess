@@ -30,8 +30,8 @@ const Match = (props) => {
     registerListeners(socket, setBoard, setInfo, setMessages, setPopUp);
 
     joinMatch(socket, matchId);
-    startMath(socket, setPopUp);
-  }, []);
+    startMath(socket);
+  }, [matchId]);
 
   return (
     <>
