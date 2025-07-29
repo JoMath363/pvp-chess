@@ -9,7 +9,7 @@ import { registerListeners } from "./listeners";
 import { joinMatch, startMath } from "./emiters";
 import { FaBars, FaChessQueen } from "react-icons/fa";
 
-const socket = io("https://pvp-chess.vercel.app", {
+const socket = io("https://pvp-chess.onrender.com", {
   autoConnect: false
 });
 
